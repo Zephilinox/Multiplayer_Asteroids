@@ -5,10 +5,10 @@
 
 //3RD
 #include <SFML/Graphics.hpp>
-
-//SELF
 #include <ZGE/ResourceManagement/Resource.hpp>
 #include <ZGE/Vector.hpp>
+
+//SELF
 
 class Player : public sf::Drawable
 {
@@ -23,7 +23,9 @@ private:
     sf::Sprite m_Sprite;
     zge::Resource<sf::Texture> m_Texture;
 
+    float m_Acceleration;
     zge::Vector m_Velocity;
+    float m_MaxVelocityLength;
 };
 
 #endif //PLAYER_HPP
