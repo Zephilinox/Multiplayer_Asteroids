@@ -1,5 +1,13 @@
 #include "Player.hpp"
 
+//STD
+#include <cmath>
+
+//3RD
+
+//SELF
+#include "Utility.hpp"
+
 Player::Player():
 m_Texture("textures/ship.png"),
 m_Acceleration(300),
@@ -74,10 +82,19 @@ void Player::update(const sf::Time dt)
         m_Velocity *= m_MaxVelocityLength / m_Velocity.length();
     }
 
+    zge::Vector gravity = (zge::Vector(1280/2, 720/2) - zge::Vector(m_Sprite.getPosition().x, m_Sprite.getPosition().y));
+    float gravityMultiplier = std::min(1/gravity.length() * 20, 10.d);
+
+    gravity *= gravityMultiplier;
+
+    m_Velocity += gravity;
+
     m_Sprite.move(m_Velocity.x * dt.asSeconds(), m_Velocity.y * dt.asSeconds());
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    utility::drawLine(target, m_Sprite.getPosition().x, m_Sprite.getPosition().y, m_Sprite.getPosition().x + m_Velocity.x, m_Sprite.getPosition().y + m_Velocity.y, sf::Color::Red);
+    utility::drawLine(target, m_Sprite.getPosition().x, m_Sprite.getPosition().y, 1280/2, 720/2, sf::Color::Blue);
     target.draw(m_Sprite, states);
 }
