@@ -26,6 +26,13 @@ private:
     float m_Acceleration;
     zge::Vector m_Velocity;
     float m_MaxVelocityLength;
+
+    sf::Keyboard::Key m_forwards;
+    sf::Keyboard::Key m_backwards;
+    sf::Keyboard::Key m_left;
+    sf::Keyboard::Key m_right;
+    sf::Keyboard::Key m_decelerate;
+    sf::Keyboard::Key m_shoot;
 };
 
 #endif //PLAYER_HPP
