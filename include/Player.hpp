@@ -19,12 +19,21 @@ public:
     void update(const sf::Time dt);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+    void useWASD();
+    void useArrow();
+
+    void setColor(sf::Color c);
+    void setGravityPosition(zge::Vector pos);
+
+    zge::Vector getPosition();
+
 private:
     sf::Sprite m_Sprite;
     zge::Resource<sf::Texture> m_Texture;
 
     float m_Acceleration;
     zge::Vector m_Velocity;
+    zge::Vector m_Gravity;
     float m_MaxVelocityLength;
 
     sf::Keyboard::Key m_forwards;

@@ -6,11 +6,11 @@
 //3RD
 
 //SELF
-#include "Utility.hpp"
+#include "ZGE/Utility.hpp"
 
 Player::Player():
 m_Texture("textures/ship.png"),
-m_Acceleration(300),
+m_Acceleration(200),
 m_MaxVelocityLength(m_Acceleration * 2)
 {
     m_Texture.get().setSmooth(true);
@@ -20,14 +20,9 @@ m_MaxVelocityLength(m_Acceleration * 2)
     m_Sprite.setOrigin(m_Texture.get().getSize().x / 2,
                        m_Texture.get().getSize().y / 2);
 
-    m_Sprite.setPosition(50, 50);
+    m_Sprite.setPosition(1280/2, 720/2);
 
-    m_forwards = sf::Keyboard::Key::W;
-    m_backwards = sf::Keyboard::Key::S;
-    m_left = sf::Keyboard::Key::A;
-    m_right = sf::Keyboard::Key::D;
-    m_decelerate = sf::Keyboard::Key::LShift;
-    m_shoot = sf::Keyboard::Key::Space;
+    useWASD();
 }
 
 void Player::handleEvent(const sf::Event)
@@ -82,19 +77,67 @@ void Player::update(const sf::Time dt)
         m_Velocity *= m_MaxVelocityLength / m_Velocity.length();
     }
 
-    zge::Vector gravity = (zge::Vector(1280/2, 720/2) - zge::Vector(m_Sprite.getPosition().x, m_Sprite.getPosition().y));
-    float gravityMultiplier = std::min(1/gravity.length() * 20, 10.d);
-
-    gravity *= gravityMultiplier;
-
-    m_Velocity += gravity;
-
+    if (m_Gravity.length() != 0)
+    {
+        m_Velocity += m_Gravity * (1/m_Gravity.length()) * (m_Acceleration * dt.asSeconds() * 0.8);
+    }
     m_Sprite.move(m_Velocity.x * dt.asSeconds(), m_Velocity.y * dt.asSeconds());
+
+    if (m_Sprite.getPosition().x + (m_Texture.get().getSize().x / 2) <= 0)
+    {
+        m_Sprite.setPosition(1280, m_Sprite.getPosition().y);
+    }
+    else if (m_Sprite.getPosition().x - (m_Texture.get().getSize().x / 2) >= 1280)
+    {
+        m_Sprite.setPosition(0, m_Sprite.getPosition().y);
+    }
+    else if (m_Sprite.getPosition().y + (m_Texture.get().getSize().y / 2 ) <= 0)
+    {
+        m_Sprite.setPosition(m_Sprite.getPosition().x, 720);
+    }
+    else if (m_Sprite.getPosition().y - (m_Texture.get().getSize().y / 2) >= 720)
+    {
+        m_Sprite.setPosition(m_Sprite.getPosition().x, 0);
+    }
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    utility::drawLine(target, m_Sprite.getPosition().x, m_Sprite.getPosition().y, m_Sprite.getPosition().x + m_Velocity.x, m_Sprite.getPosition().y + m_Velocity.y, sf::Color::Red);
-    utility::drawLine(target, m_Sprite.getPosition().x, m_Sprite.getPosition().y, 1280/2, 720/2, sf::Color::Blue);
     target.draw(m_Sprite, states);
+    zge::drawLine(target, m_Sprite.getPosition().x, m_Sprite.getPosition().y, m_Sprite.getPosition().x + m_Velocity.x, m_Sprite.getPosition().y + m_Velocity.y, sf::Color::Red);
+}
+
+void Player::useWASD()
+{
+    m_forwards = sf::Keyboard::Key::W;
+    m_backwards = sf::Keyboard::Key::S;
+    m_left = sf::Keyboard::Key::A;
+    m_right = sf::Keyboard::Key::D;
+    m_decelerate = sf::Keyboard::Key::LShift;
+    m_shoot = sf::Keyboard::Key::Space;
+}
+
+void Player::useArrow()
+{
+    m_forwards = sf::Keyboard::Key::Up;
+    m_backwards = sf::Keyboard::Key::Down;
+    m_left = sf::Keyboard::Key::Left;
+    m_right = sf::Keyboard::Key::Right;
+    m_decelerate = sf::Keyboard::Key::RShift;
+    m_shoot = sf::Keyboard::Key::RControl;
+}
+
+void Player::setColor(sf::Color c)
+{
+    m_Sprite.setColor(c);
+}
+
+void Player::setGravityPosition(zge::Vector pos)
+{
+    m_Gravity = (zge::Vector(pos.x, pos.y) - zge::Vector(m_Sprite.getPosition().x, m_Sprite.getPosition().y));
+}
+
+zge::Vector Player::getPosition()
+{
+    return zge::Vector(m_Sprite.getPosition().x, m_Sprite.getPosition().y);
 }

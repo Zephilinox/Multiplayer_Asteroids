@@ -56,6 +56,7 @@
 			<Add directory="Z:/Programming/C++/SFML-2.1/lib" />
 		</Linker>
 		<Unit filename="include/Player.hpp" />
+		<Unit filename="include/Utility.hpp" />
 		<Unit filename="include/ZGE/ResourceManagement/Resource.hpp" />
 		<Unit filename="include/ZGE/ResourceManagement/ResourceCache.hpp" />
 		<Unit filename="include/ZGE/ResourceManagement/ResourceManager.hpp" />
