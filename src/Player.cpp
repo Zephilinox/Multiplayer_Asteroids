@@ -36,29 +36,29 @@ void Player::update(float dt)
     double sinRadian = std::sin(shipRadian);
     double cosRadian = std::cos(shipRadian);
 
-    if (sf::Keyboard::isKeyPressed(m_forwards))
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Forwards")))
     {
         m_velocity.x += m_acceleration * sinRadian * dt;
         m_velocity.y += -1 * m_acceleration * cosRadian * dt;
     }
 
-    if (sf::Keyboard::isKeyPressed(m_backwards))
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Backwards")))
     {
         m_velocity.x += -1 * m_acceleration * sinRadian * dt;
         m_velocity.y += m_acceleration * cosRadian * dt;
     }
 
-    if (sf::Keyboard::isKeyPressed(m_left))
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Left")))
     {
         m_sprite.rotate(-300 * dt);
     }
 
-    if (sf::Keyboard::isKeyPressed(m_right))
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Right")))
     {
         m_sprite.rotate(300 * dt);
     }
 
-    if (sf::Keyboard::isKeyPressed(m_decelerate))
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Decelerate")))
     {
         if (m_velocity.length() > 5)
         {
@@ -79,19 +79,19 @@ void Player::update(float dt)
 
     m_sprite.move(m_velocity.x * dt, m_velocity.y * dt);
 
-    if (m_sprite.getPosition().x + (m_texture.get().getSize().x / 2) <= 0)
+    if (m_sprite.getPosition().x + (m_texture->getSize().x / 2) <= 0)
     {
         m_sprite.setPosition(1280, m_sprite.getPosition().y);
     }
-    else if (m_sprite.getPosition().x - (m_texture.get().getSize().x / 2) >= 1280)
+    else if (m_sprite.getPosition().x - (m_texture->getSize().x / 2) >= 1280)
     {
         m_sprite.setPosition(0, m_sprite.getPosition().y);
     }
-    else if (m_sprite.getPosition().y + (m_texture.get().getSize().y / 2 ) <= 0)
+    else if (m_sprite.getPosition().y + (m_texture->getSize().y / 2 ) <= 0)
     {
         m_sprite.setPosition(m_sprite.getPosition().x, 720);
     }
-    else if (m_sprite.getPosition().y - (m_texture.get().getSize().y / 2) >= 720)
+    else if (m_sprite.getPosition().y - (m_texture->getSize().y / 2) >= 720)
     {
         m_sprite.setPosition(m_sprite.getPosition().x, 0);
     }
@@ -105,22 +105,22 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Player::useWASD()
 {
-    m_forwards = sf::Keyboard::Key::W;
-    m_backwards = sf::Keyboard::Key::S;
-    m_left = sf::Keyboard::Key::A;
-    m_right = sf::Keyboard::Key::D;
-    m_decelerate = sf::Keyboard::Key::LShift;
-    m_shoot = sf::Keyboard::Key::Space;
+    m_keys.add("Forwards", sf::Keyboard::Key::W);
+    m_keys.add("Backwards", sf::Keyboard::Key::S);
+    m_keys.add("Left", sf::Keyboard::Key::A);
+    m_keys.add("Right", sf::Keyboard::Key::D);
+    m_keys.add("Decelerate", sf::Keyboard::Key::LShift);
+    m_keys.add("Shoot", sf::Keyboard::Key::Space);
 }
 
 void Player::useArrow()
 {
-    m_forwards = sf::Keyboard::Key::Up;
-    m_backwards = sf::Keyboard::Key::Down;
-    m_left = sf::Keyboard::Key::Left;
-    m_right = sf::Keyboard::Key::Right;
-    m_decelerate = sf::Keyboard::Key::RShift;
-    m_shoot = sf::Keyboard::Key::RControl;
+    m_keys.add("Forwards", sf::Keyboard::Key::Up);
+    m_keys.add("Backwards", sf::Keyboard::Key::Down);
+    m_keys.add("Left", sf::Keyboard::Key::Left);
+    m_keys.add("Right", sf::Keyboard::Key::Right);
+    m_keys.add("Decelerate", sf::Keyboard::Key::RShift);
+    m_keys.add("Shoot", sf::Keyboard::Key::RControl);
 }
 
 void Player::setColor(sf::Color c)

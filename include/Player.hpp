@@ -9,6 +9,7 @@
 #include <ZGE/Vector.hpp>
 
 //SELF
+#include "KeybindingCache.hpp"
 
 class Player : public sf::Drawable
 {
@@ -35,12 +36,7 @@ private:
     zge::Vector m_velocity;
     float m_maxVelocityLength;
 
-    sf::Keyboard::Key m_forwards;
-    sf::Keyboard::Key m_backwards;
-    sf::Keyboard::Key m_left;
-    sf::Keyboard::Key m_right;
-    sf::Keyboard::Key m_decelerate;
-    sf::Keyboard::Key m_shoot;
+    KeybindingCache m_keys;
 };
 
 #endif //PLAYER_HPP
