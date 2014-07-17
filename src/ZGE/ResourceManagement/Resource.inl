@@ -7,22 +7,22 @@ namespace zge
 
 template <class ResourceType>
 Resource<ResourceType>::Resource(std::string n)
-    : m_Name(n)
+    : m_name(n)
 {
-    std::transform(m_Name.begin(), m_Name.end(), m_Name.begin(), ::tolower);
+    std::transform(m_name.begin(), m_name.end(), m_name.begin(), ::tolower);
 
-    std::cout << "[Resource] Constructor | " << m_Name << "\n";
-    if (ResourceManager<ResourceType>::getInstance().create(m_Name))
+    //std::cout << "[Resource] Constructor | " << m_name << "\n";
+    if (ResourceManager<ResourceType>::getInstance().create(m_name))
     {
-        assert(ResourceManager<ResourceType>::getInstance().get(m_Name).loadFromFile(m_Name));
+        assert(ResourceManager<ResourceType>::getInstance().get(m_name).loadFromFile(m_name));
     }
 }
 
 template <class ResourceType>
 Resource<ResourceType>::~Resource()
 {
-    std::cout << "[Resource] Destructor | " << m_Name << "\n";
-    ResourceManager<ResourceType>::getInstance().destroy(m_Name);
+    //std::cout << "[Resource] Destructor | " << m_name << "\n";
+    ResourceManager<ResourceType>::getInstance().destroy(m_name);
 }
 
 template <class ResourceType>
@@ -39,24 +39,30 @@ Resource<ResourceType>& Resource<ResourceType>::operator=(const Resource<Resourc
 }
 
 template <class ResourceType>
+Resource<ResourceType>::operator ResourceType&() const
+{
+    return ResourceManager<ResourceType>::getInstance().get(m_name);
+}
+
+template <class ResourceType>
 ResourceType& Resource<ResourceType>::get()
 {
-    return ResourceManager<ResourceType>::getInstance().get(m_Name);
+    return ResourceManager<ResourceType>::getInstance().get(m_name);
 }
 
 template <class ResourceType>
 void Resource<ResourceType>::copyResource(const Resource<ResourceType>& res)
 {
-    std::cout << "[Resource] Copied\n";
-    std::cout << "\tthis = " << m_Name << "\n\tother = " << res.m_Name << "\n";
+    //std::cout << "[Resource] Copied\n";
+    //std::cout << "\tthis = " << m_name << "\n\tother = " << res.m_name << "\n";
 
-    if (!m_Name.empty())
+    if (!m_name.empty())
     {
-        ResourceManager<ResourceType>::getInstance().destroy(m_Name); //Destroy whatever resource res was holding before
+        ResourceManager<ResourceType>::getInstance().destroy(m_name); //Destroy whatever resource res was holding before
     }
 
-    m_Name = res.m_Name;
-    ResourceManager<ResourceType>::getInstance().create(m_Name); //Increase reference count
+    m_name = res.m_name;
+    ResourceManager<ResourceType>::getInstance().create(m_name); //Increase reference count
 }
 
 } //ZGE

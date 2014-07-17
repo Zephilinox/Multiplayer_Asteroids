@@ -23,13 +23,14 @@ public:
 
     Resource(const Resource& res);
     Resource& operator=(const Resource& res);
+    operator ResourceType&() const;
 
     ResourceType& get();
 
 private:
     void copyResource(const Resource<ResourceType>& res);
 
-    std::string m_Name;
+    std::string m_name;
 };
 
 /*
@@ -54,9 +55,9 @@ public:
 private:
     void copyResource(const Resource<sf::Sound>& res);
 
-    std::string m_Name;
-    sf::Sound m_Sound;
-    static unsigned int m_GlobalSoundInstances;
+    std::string m_name;
+    sf::Sound m_sound;
+    static unsigned int m_globalSoundInstances;
 };
 
 /*
@@ -79,9 +80,9 @@ public:
     sf::Music& get();
 
 private:
-    std::string m_Name;
-    sf::Music m_Music;
-    static unsigned int m_GlobalMusicInstances;
+    std::string m_name;
+    sf::Music m_music;
+    static unsigned int m_globalMusicInstances;
 };
 
 } //ZGE

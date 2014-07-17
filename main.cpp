@@ -6,6 +6,9 @@
 //SELF
 #include "Player.hpp"
 #include "ZGE/Utility.hpp"
+#include "ZGE/State/StateHandler.hpp"
+#include "ZGE/State/BaseState.hpp"
+#include "GameState.hpp"
 
 int main()
 {
@@ -13,46 +16,45 @@ int main()
     //window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
 
-    Player player1;
-    player1.setColor(sf::Color(255, 180, 0));
-    Player player2;
-    player2.setColor(sf::Color(50, 200, 50));
-    player2.useArrow();
+    zge::StateHandler stateHandler;
+    stateHandler.getStateCollection().push<GameState>(window);
 
     sf::Clock frameTimer;
     sf::Time prevFrameTime = sf::seconds(1.f/60.f);
+    sf::Event event;
 
-    while (window.isOpen())
+    while (window.isOpen() &&
+           stateHandler.getStateCollection().getSize() > 0)
     {
-        sf::Event event;
         while (window.pollEvent(event))
         {
-            player1.handleEvent(event);
+            stateHandler.handleEvent(event);
 
             switch(event.type)
             {
                 case sf::Event::Closed:
+                {
                     window.close();
                     break;
+                }
 
                 default:
+                {
                     break;
+                }
             }
         }
 
-        player1.setGravityPosition(player2.getPosition());
-        player1.update(prevFrameTime);
-
-        player2.setGravityPosition(player1.getPosition());
-        player2.update(prevFrameTime);
+        stateHandler.update(prevFrameTime.asSeconds());
 
         window.clear(sf::Color(40, 40, 40));
-        window.draw(player1);
-        window.draw(player2);
-        zge::drawLine(window, player1.getPosition().x, player1.getPosition().y, player2.getPosition().x, player2.getPosition().y, sf::Color(0, 180, 255));
+        stateHandler.draw(window);
         window.display();
 
+        stateHandler.postDraw();
+
         prevFrameTime = frameTimer.restart();
+        std::cout << "FPS: " << 1.f / prevFrameTime.asSeconds() << "\n";
     }
 
     return 0;

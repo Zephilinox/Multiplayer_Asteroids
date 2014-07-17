@@ -31,7 +31,7 @@ public:
     void removeAll();
 
 private:
-    std::map<std::string, std::unique_ptr<Resource<ResourceType>>> m_Resources;
+    std::map<std::string, std::unique_ptr<Resource<ResourceType>>> m_resources;
 };
 
 /*
@@ -55,7 +55,7 @@ public:
     void removeAll();
 
 private:
-    std::map<std::string, std::unique_ptr<Resource<sf::Sound>>> m_Resources;
+    std::map<std::string, std::unique_ptr<Resource<sf::Sound>>> m_resources;
 };*/
 
 #include "ResourceManagement/ResourceCache.inl"

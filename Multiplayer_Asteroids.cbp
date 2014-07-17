@@ -56,10 +56,10 @@
 			<Add directory="Z:/Programming/C++/SFML-2.1/lib" />
 		</Linker>
 		<Unit filename="include/Player.hpp" />
-		<Unit filename="include/Utility.hpp" />
 		<Unit filename="include/ZGE/ResourceManagement/Resource.hpp" />
 		<Unit filename="include/ZGE/ResourceManagement/ResourceCache.hpp" />
 		<Unit filename="include/ZGE/ResourceManagement/ResourceManager.hpp" />
+		<Unit filename="include/ZGE/Utility.hpp" />
 		<Unit filename="include/ZGE/Vector.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Player.cpp" />
@@ -67,7 +67,11 @@
 		<Unit filename="src/ZGE/ResourceManagement/Resource.inl" />
 		<Unit filename="src/ZGE/ResourceManagement/ResourceCache.inl" />
 		<Unit filename="src/ZGE/ResourceManagement/ResourceManager.inl" />
+		<Unit filename="src/ZGE/Utility.cpp" />
 		<Unit filename="src/ZGE/Vector.cpp" />
+		<Unit filename="textures/Bullet.png" />
+		<Unit filename="textures/Ship.png" />
+		<Unit filename="textures/Star.png" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -15,8 +15,8 @@ class Player : public sf::Drawable
 public:
     Player();
 
-    void handleEvent(const sf::Event);
-    void update(const sf::Time dt);
+    void handleEvent(const sf::Event& event);
+    void update(float dt);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void useWASD();
@@ -28,13 +28,12 @@ public:
     zge::Vector getPosition();
 
 private:
-    sf::Sprite m_Sprite;
-    zge::Resource<sf::Texture> m_Texture;
+    sf::Sprite m_sprite;
+    zge::Resource<sf::Texture> m_texture;
 
-    float m_Acceleration;
-    zge::Vector m_Velocity;
-    zge::Vector m_Gravity;
-    float m_MaxVelocityLength;
+    float m_acceleration;
+    zge::Vector m_velocity;
+    float m_maxVelocityLength;
 
     sf::Keyboard::Key m_forwards;
     sf::Keyboard::Key m_backwards;

@@ -9,102 +9,98 @@
 #include "ZGE/Utility.hpp"
 
 Player::Player():
-m_Texture("textures/ship.png"),
-m_Acceleration(200),
-m_MaxVelocityLength(m_Acceleration * 2)
+m_texture("textures/ship.png"),
+m_acceleration(200),
+m_maxVelocityLength(m_acceleration * 2)
 {
-    m_Texture.get().setSmooth(true);
+    m_texture.get().setSmooth(true);
 
-    m_Sprite.setTexture(m_Texture.get());
+    m_sprite.setTexture(m_texture.get());
 
-    m_Sprite.setOrigin(m_Texture.get().getSize().x / 2,
-                       m_Texture.get().getSize().y / 2);
+    m_sprite.setOrigin(m_texture.get().getSize().x / 2,
+                       m_texture.get().getSize().y / 2);
 
-    m_Sprite.setPosition(1280/2, 720/2);
+    m_sprite.setPosition(1280/2, 720/2);
 
     useWASD();
 }
 
-void Player::handleEvent(const sf::Event)
+void Player::handleEvent(const sf::Event& event)
 {
 
 }
 
-void Player::update(const sf::Time dt)
+void Player::update(float dt)
 {
-    double shipRadian = zge::degToRad(m_Sprite.getRotation());
+    double shipRadian = zge::degToRad(m_sprite.getRotation());
     double sinRadian = std::sin(shipRadian);
     double cosRadian = std::cos(shipRadian);
 
     if (sf::Keyboard::isKeyPressed(m_forwards))
     {
-        m_Velocity.x += m_Acceleration * sinRadian * dt.asSeconds();
-        m_Velocity.y += -1 * m_Acceleration * cosRadian * dt.asSeconds();
+        m_velocity.x += m_acceleration * sinRadian * dt;
+        m_velocity.y += -1 * m_acceleration * cosRadian * dt;
     }
 
     if (sf::Keyboard::isKeyPressed(m_backwards))
     {
-        m_Velocity.x += -1 * m_Acceleration * sinRadian * dt.asSeconds();
-        m_Velocity.y += m_Acceleration * cosRadian * dt.asSeconds();
+        m_velocity.x += -1 * m_acceleration * sinRadian * dt;
+        m_velocity.y += m_acceleration * cosRadian * dt;
     }
 
     if (sf::Keyboard::isKeyPressed(m_left))
     {
-        m_Sprite.rotate(-300 * dt.asSeconds());
+        m_sprite.rotate(-300 * dt);
     }
 
     if (sf::Keyboard::isKeyPressed(m_right))
     {
-        m_Sprite.rotate(300 * dt.asSeconds());
+        m_sprite.rotate(300 * dt);
     }
 
     if (sf::Keyboard::isKeyPressed(m_decelerate))
     {
-        if (m_Velocity.length() > 5)
+        if (m_velocity.length() > 5)
         {
-            m_Velocity.x -= m_Acceleration * m_Velocity.normalized().x * dt.asSeconds();
-            m_Velocity.y -= m_Acceleration * m_Velocity.normalized().y * dt.asSeconds();
+            m_velocity.x -= m_acceleration * m_velocity.normalized().x * dt;
+            m_velocity.y -= m_acceleration * m_velocity.normalized().y * dt;
         }
         else
         {
-            m_Velocity.x = 0;
-            m_Velocity.y = 0;
+            m_velocity.x = 0;
+            m_velocity.y = 0;
         }
     }
 
-    if (m_Velocity.length() > m_MaxVelocityLength)
+    if (m_velocity.length() > m_maxVelocityLength)
     {
-        m_Velocity *= m_MaxVelocityLength / m_Velocity.length();
+        m_velocity *= m_maxVelocityLength / m_velocity.length();
     }
 
-    if (m_Gravity.length() != 0)
-    {
-        m_Velocity += m_Gravity * (1/m_Gravity.length()) * (m_Acceleration * dt.asSeconds() * 0.8);
-    }
-    m_Sprite.move(m_Velocity.x * dt.asSeconds(), m_Velocity.y * dt.asSeconds());
+    m_sprite.move(m_velocity.x * dt, m_velocity.y * dt);
 
-    if (m_Sprite.getPosition().x + (m_Texture.get().getSize().x / 2) <= 0)
+    if (m_sprite.getPosition().x + (m_texture.get().getSize().x / 2) <= 0)
     {
-        m_Sprite.setPosition(1280, m_Sprite.getPosition().y);
+        m_sprite.setPosition(1280, m_sprite.getPosition().y);
     }
-    else if (m_Sprite.getPosition().x - (m_Texture.get().getSize().x / 2) >= 1280)
+    else if (m_sprite.getPosition().x - (m_texture.get().getSize().x / 2) >= 1280)
     {
-        m_Sprite.setPosition(0, m_Sprite.getPosition().y);
+        m_sprite.setPosition(0, m_sprite.getPosition().y);
     }
-    else if (m_Sprite.getPosition().y + (m_Texture.get().getSize().y / 2 ) <= 0)
+    else if (m_sprite.getPosition().y + (m_texture.get().getSize().y / 2 ) <= 0)
     {
-        m_Sprite.setPosition(m_Sprite.getPosition().x, 720);
+        m_sprite.setPosition(m_sprite.getPosition().x, 720);
     }
-    else if (m_Sprite.getPosition().y - (m_Texture.get().getSize().y / 2) >= 720)
+    else if (m_sprite.getPosition().y - (m_texture.get().getSize().y / 2) >= 720)
     {
-        m_Sprite.setPosition(m_Sprite.getPosition().x, 0);
+        m_sprite.setPosition(m_sprite.getPosition().x, 0);
     }
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(m_Sprite, states);
-    zge::drawLine(target, m_Sprite.getPosition().x, m_Sprite.getPosition().y, m_Sprite.getPosition().x + m_Velocity.x, m_Sprite.getPosition().y + m_Velocity.y, sf::Color::Red);
+    target.draw(m_sprite, states);
+    zge::drawLine(target, m_sprite.getPosition().x, m_sprite.getPosition().y, m_sprite.getPosition().x + m_velocity.x, m_sprite.getPosition().y + m_velocity.y, sf::Color::Red);
 }
 
 void Player::useWASD()
@@ -129,15 +125,10 @@ void Player::useArrow()
 
 void Player::setColor(sf::Color c)
 {
-    m_Sprite.setColor(c);
-}
-
-void Player::setGravityPosition(zge::Vector pos)
-{
-    m_Gravity = (zge::Vector(pos.x, pos.y) - zge::Vector(m_Sprite.getPosition().x, m_Sprite.getPosition().y));
+    m_sprite.setColor(c);
 }
 
 zge::Vector Player::getPosition()
 {
-    return zge::Vector(m_Sprite.getPosition().x, m_Sprite.getPosition().y);
+    return zge::Vector(m_sprite.getPosition().x, m_sprite.getPosition().y);
 }

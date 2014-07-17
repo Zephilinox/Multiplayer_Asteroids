@@ -21,9 +21,9 @@ public:
 
 private:
     ResourceManager() = default;
-    static std::unique_ptr<ResourceManager> m_Instance;
+    static std::unique_ptr<ResourceManager> m_instance;
 
-    std::map<std::string, std::pair<unsigned int, std::unique_ptr<ResourceType>>> m_Resources;
+    std::map<std::string, std::pair<unsigned int, std::unique_ptr<ResourceType>>> m_resources;
 };
 
 }

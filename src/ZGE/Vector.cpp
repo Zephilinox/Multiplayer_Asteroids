@@ -85,7 +85,7 @@ Vector& Vector::operator+=(double argScalar)
     return *this;
 }
 
-Vector Vector::operator-(const double argScalar)
+Vector Vector::operator-(double argScalar)
 {
     Vector vec(x - argScalar, y - argScalar);
     return vec;
