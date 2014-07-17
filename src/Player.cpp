@@ -13,12 +13,12 @@ m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2)
 {
-    m_texture.get().setSmooth(true);
+    m_texture->setSmooth(true);
 
     m_sprite.setTexture(m_texture);
 
-    m_sprite.setOrigin(m_texture.get().getSize().x / 2,
-                       m_texture.get().getSize().y / 2);
+    m_sprite.setOrigin(m_texture->getSize().x / 2,
+                       m_texture->getSize().y / 2);
 
     m_sprite.setPosition(1280/2, 720/2);
 

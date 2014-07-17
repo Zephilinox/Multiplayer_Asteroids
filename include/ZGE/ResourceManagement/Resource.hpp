@@ -24,6 +24,7 @@ public:
     Resource(const Resource& res);
     Resource& operator=(const Resource& res);
     operator ResourceType&() const;
+    ResourceType* operator->();
 
     ResourceType& get();
 

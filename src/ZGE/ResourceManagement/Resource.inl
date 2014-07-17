@@ -45,6 +45,12 @@ Resource<ResourceType>::operator ResourceType&() const
 }
 
 template <class ResourceType>
+ResourceType* Resource<ResourceType>::operator->()
+{
+    return &get();
+}
+
+template <class ResourceType>
 ResourceType& Resource<ResourceType>::get()
 {
     return ResourceManager<ResourceType>::getInstance().get(m_name);
