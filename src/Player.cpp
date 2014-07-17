@@ -15,7 +15,7 @@ m_maxVelocityLength(m_acceleration * 2)
 {
     m_texture.get().setSmooth(true);
 
-    m_sprite.setTexture(m_texture.get());
+    m_sprite.setTexture(m_texture);
 
     m_sprite.setOrigin(m_texture.get().getSize().x / 2,
                        m_texture.get().getSize().y / 2);
