@@ -3,6 +3,11 @@
 //STD
 #include <iostream>
 
+//3RD
+
+//SELF
+#include "States/PauseState.hpp"
+
 GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
 m_player1(window),
@@ -46,7 +51,8 @@ void GameState::postDraw()
 {
     if (m_action == 1)
     {
-        m_stateCollection.pop();
+        m_stateCollection.push<PauseState>(m_window);
         m_action = 0;
+        std::cout << "PauseState Pushed\n";
     }
 }
