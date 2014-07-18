@@ -6,6 +6,8 @@
 //3RD
 #include <SFML/Graphics.hpp>
 #include <ZGE/State/BaseState.hpp>
+#include <ZGE/State/StateCollection.hpp>
+#include <ZGE/ResourceManagement/Resource.hpp>
 
 //SELF
 
@@ -20,6 +22,14 @@ public:
     void postDraw() override;
 
 private:
+    sf::Color fade(sf::Color c, unsigned initialAlpha, unsigned desiredAlpha, sf::Time maxTime, sf::Time curTime);
+
+    sf::Clock m_timeSpentInState;
+
+    sf::Text m_gameTitle;
+    zge::Resource<sf::Font> m_font;
+    zge::Resource<sf::Texture> m_logoTexture;
+    sf::Sprite m_logoSprite;
 };
 
 #endif //SPLASHSTATE_HPP
