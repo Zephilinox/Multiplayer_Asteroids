@@ -46,6 +46,8 @@ private:
     KeybindingCache m_keys;
 
     BulletManager m_bulletManager;
+    sf::Clock m_shootCooldown;
+    sf::Time m_shootDelay;
 };
 
 #endif //PLAYER_HPP

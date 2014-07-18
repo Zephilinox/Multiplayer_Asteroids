@@ -2,6 +2,7 @@
 
 BulletManager::BulletManager()
 {
+
 }
 
 void BulletManager::handleEvent(const sf::Event event)

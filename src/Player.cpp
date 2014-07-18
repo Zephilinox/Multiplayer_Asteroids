@@ -12,7 +12,8 @@ Player::Player(sf::RenderWindow& window):
 m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
-m_maxVelocityLength(m_acceleration * 2)
+m_maxVelocityLength(m_acceleration * 2),
+m_shootDelay(sf::seconds(0.2f))
 {
     m_texture->setSmooth(true);
 
@@ -49,14 +50,21 @@ void Player::update(float dt)
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(m_keys.get("Shoot")))
-    {
-        m_bulletManager.createBullet(m_sprite.getPosition(), m_sprite.getRotation(), 400, m_sprite.getColor());
-    }
-
     capVelocity();
 
     m_sprite.move(m_velocity.x * dt, m_velocity.y * dt);
+
+    //Attempt to spawn bullet in more accurate location, by basing it off of the likely position of the ship next frame
+    //as well as spawning it using the latest sprite location (as this is located after we move the sprite
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Shoot")) &&
+        m_shootCooldown.getElapsedTime().asSeconds() >= m_shootDelay.asSeconds())
+    {
+        m_shootCooldown.restart();
+        sf::Vector2f gunPos = m_sprite.getPosition();
+        gunPos.x += m_velocity.x * dt;
+        gunPos.y += m_velocity.y * dt;
+        m_bulletManager.createBullet(gunPos, m_sprite.getRotation(), 800, m_sprite.getColor());
+    }
 
     keepInWindow();
 }
@@ -119,12 +127,12 @@ void Player::movement(float dt)
 
     if (sf::Keyboard::isKeyPressed(m_keys.get("Left")))
     {
-        m_sprite.rotate(-300 * dt);
+        m_sprite.rotate(-200 * dt);
     }
 
     if (sf::Keyboard::isKeyPressed(m_keys.get("Right")))
     {
-        m_sprite.rotate(300 * dt);
+        m_sprite.rotate(200 * dt);
     }
 }
 
