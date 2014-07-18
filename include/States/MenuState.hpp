@@ -6,8 +6,10 @@
 //3RD
 #include <SFML/Graphics.hpp>
 #include <ZGE/State/BaseState.hpp>
+#include <ZGE/State/StateCollection.hpp>
 
 //SELF
+#include "Menu.hpp"
 
 class MenuState : public zge::BaseState
 {
@@ -19,6 +21,9 @@ public:
     void postDraw() override;
 
 private:
+    Menu m_menu;
+
+    unsigned m_action;
 };
 
 #endif //MENUSTATE_HPP

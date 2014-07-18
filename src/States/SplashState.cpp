@@ -5,7 +5,7 @@
 //3RD
 
 //SELF
-#include "States/GameState.hpp"
+#include "States/MenuState.hpp"
 
 SplashState::SplashState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
@@ -63,7 +63,7 @@ void SplashState::postDraw()
     if (m_timeSpentInState.getElapsedTime().asSeconds() >= 3.0f)
     {
         m_stateCollection.pop();
-        m_stateCollection.push<GameState>(m_window);
+        m_stateCollection.push<MenuState>(m_window);
     }
 }
 
