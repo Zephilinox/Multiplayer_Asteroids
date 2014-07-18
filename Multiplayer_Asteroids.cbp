@@ -77,6 +77,7 @@
 		<Unit filename="../ZGE/src/ZGE/State/StateHandler.cpp" />
 		<Unit filename="../ZGE/src/ZGE/Utility.cpp" />
 		<Unit filename="../ZGE/src/ZGE/Vector.cpp" />
+		<Unit filename="include/Bullet.hpp" />
 		<Unit filename="include/Button.hpp" />
 		<Unit filename="include/KeybindingCache.hpp" />
 		<Unit filename="include/Menu.hpp" />
@@ -86,6 +87,7 @@
 		<Unit filename="include/States/PauseState.hpp" />
 		<Unit filename="include/States/SplashState.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/KeybindingCache.cpp" />
 		<Unit filename="src/Menu.cpp" />

@@ -8,7 +8,8 @@
 //SELF
 #include "ZGE/Utility.hpp"
 
-Player::Player():
+Player::Player(sf::RenderWindow& window):
+m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2)
@@ -16,47 +17,29 @@ m_maxVelocityLength(m_acceleration * 2)
     m_texture->setSmooth(true);
 
     m_sprite.setTexture(m_texture);
-
     m_sprite.setOrigin(m_texture->getSize().x / 2,
                        m_texture->getSize().y / 2);
 
-    m_sprite.setPosition(1280/2, 720/2);
-
+    m_sprite.setPosition(window.getView().getCenter().x, window.getView().getCenter().y);
     useWASD();
 }
 
 void Player::handleEvent(const sf::Event& event)
 {
-
+    for (Bullet& b : m_bullets)
+    {
+        b.handleEvent(event);
+    }
 }
 
 void Player::update(float dt)
 {
-    double shipRadian = zge::degToRad(m_sprite.getRotation());
-    double sinRadian = std::sin(shipRadian);
-    double cosRadian = std::cos(shipRadian);
-
-    if (sf::Keyboard::isKeyPressed(m_keys.get("Forwards")))
+    for (Bullet& b : m_bullets)
     {
-        m_velocity.x += m_acceleration * sinRadian * dt;
-        m_velocity.y += -1 * m_acceleration * cosRadian * dt;
+        b.update(dt);
     }
 
-    if (sf::Keyboard::isKeyPressed(m_keys.get("Backwards")))
-    {
-        m_velocity.x += -1 * m_acceleration * sinRadian * dt;
-        m_velocity.y += m_acceleration * cosRadian * dt;
-    }
-
-    if (sf::Keyboard::isKeyPressed(m_keys.get("Left")))
-    {
-        m_sprite.rotate(-300 * dt);
-    }
-
-    if (sf::Keyboard::isKeyPressed(m_keys.get("Right")))
-    {
-        m_sprite.rotate(300 * dt);
-    }
+    movement(dt);
 
     if (sf::Keyboard::isKeyPressed(m_keys.get("Decelerate")))
     {
@@ -72,33 +55,28 @@ void Player::update(float dt)
         }
     }
 
-    if (m_velocity.length() > m_maxVelocityLength)
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Shoot")))
     {
-        m_velocity *= m_maxVelocityLength / m_velocity.length();
+        Bullet b(m_sprite.getPosition(), m_sprite.getRotation(), 400);
+        m_bullets.push_back(b);
+
+        std::cout << m_bullets.size() << "\n";
     }
+
+    capVelocity();
 
     m_sprite.move(m_velocity.x * dt, m_velocity.y * dt);
 
-    if (m_sprite.getPosition().x + (m_texture->getSize().x / 2) <= 0)
-    {
-        m_sprite.setPosition(1280, m_sprite.getPosition().y);
-    }
-    else if (m_sprite.getPosition().x - (m_texture->getSize().x / 2) >= 1280)
-    {
-        m_sprite.setPosition(0, m_sprite.getPosition().y);
-    }
-    else if (m_sprite.getPosition().y + (m_texture->getSize().y / 2 ) <= 0)
-    {
-        m_sprite.setPosition(m_sprite.getPosition().x, 720);
-    }
-    else if (m_sprite.getPosition().y - (m_texture->getSize().y / 2) >= 720)
-    {
-        m_sprite.setPosition(m_sprite.getPosition().x, 0);
-    }
+    keepInWindow();
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    for (Bullet b : m_bullets)
+    {
+        target.draw(b, states);
+    }
+
     target.draw(m_sprite, states);
     zge::drawLine(target, m_sprite.getPosition().x, m_sprite.getPosition().y, m_sprite.getPosition().x + m_velocity.x, m_sprite.getPosition().y + m_velocity.y, sf::Color::Red);
 }
@@ -131,4 +109,61 @@ void Player::setColor(sf::Color c)
 zge::Vector Player::getPosition()
 {
     return zge::Vector(m_sprite.getPosition().x, m_sprite.getPosition().y);
+}
+
+void Player::movement(float dt)
+{
+    double shipRadian = zge::Vector::degToRad(m_sprite.getRotation());
+    double sinRadian = std::sin(shipRadian);
+    double cosRadian = std::cos(shipRadian);
+
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Forwards")))
+    {
+        m_velocity.x += m_acceleration * sinRadian * dt;
+        m_velocity.y += -1 * m_acceleration * cosRadian * dt;
+    }
+
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Backwards")))
+    {
+        m_velocity.x += -1 * m_acceleration * sinRadian * dt;
+        m_velocity.y += m_acceleration * cosRadian * dt;
+    }
+
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Left")))
+    {
+        m_sprite.rotate(-300 * dt);
+    }
+
+    if (sf::Keyboard::isKeyPressed(m_keys.get("Right")))
+    {
+        m_sprite.rotate(300 * dt);
+    }
+}
+
+void Player::capVelocity()
+{
+    if (m_velocity.length() > m_maxVelocityLength)
+    {
+        m_velocity *= m_maxVelocityLength / m_velocity.length();
+    }
+}
+
+void Player::keepInWindow()
+{
+    if (m_sprite.getPosition().x + (m_texture->getSize().x / 2) <= 0)
+    {
+        m_sprite.setPosition(1280, m_sprite.getPosition().y);
+    }
+    else if (m_sprite.getPosition().x - (m_texture->getSize().x / 2) >= 1280)
+    {
+        m_sprite.setPosition(0, m_sprite.getPosition().y);
+    }
+    else if (m_sprite.getPosition().y + (m_texture->getSize().y / 2 ) <= 0)
+    {
+        m_sprite.setPosition(m_sprite.getPosition().x, 720);
+    }
+    else if (m_sprite.getPosition().y - (m_texture->getSize().y / 2) >= 720)
+    {
+        m_sprite.setPosition(m_sprite.getPosition().x, 0);
+    }
 }

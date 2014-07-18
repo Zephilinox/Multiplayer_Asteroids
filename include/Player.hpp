@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 //STD
+#include <vector>
 
 //3RD
 #include <SFML/Graphics.hpp>
@@ -10,11 +11,12 @@
 
 //SELF
 #include "KeybindingCache.hpp"
+#include "Bullet.hpp"
 
 class Player : public sf::Drawable
 {
 public:
-    Player();
+    Player(sf::RenderWindow& window);
 
     void handleEvent(const sf::Event& event);
     void update(float dt);
@@ -29,6 +31,11 @@ public:
     zge::Vector getPosition();
 
 private:
+    void movement(float dt);
+    void capVelocity();
+    void keepInWindow();
+
+    sf::RenderWindow& m_window;
     sf::Sprite m_sprite;
     zge::Resource<sf::Texture> m_texture;
 
@@ -37,6 +44,8 @@ private:
     float m_maxVelocityLength;
 
     KeybindingCache m_keys;
+
+    std::vector<Bullet> m_bullets;
 };
 
 #endif //PLAYER_HPP
