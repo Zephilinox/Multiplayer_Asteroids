@@ -15,7 +15,24 @@ m_font("fonts/arial.ttf")
 
 void Button::handleEvent(const sf::Event& event)
 {
+    m_mouseClicked = false; //reset it to false each frame
 
+    switch (event.type)
+    {
+        case sf::Event::MouseButtonPressed:
+        {
+            if (event.mouseButton.button == sf::Mouse::Left)
+            {
+                m_mouseClicked = true; //Set it to true if the mouse was clicked, then we set it to false later if it's not this button that was clicked.
+            }
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -33,32 +50,24 @@ void Button::update(float dt)
         sf::Mouse::getPosition(m_window).y < m_sprite.getPosition().y + this->getSize().y)
         {
             m_text.setColor(sf::Color(255, 180, 0));
-
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-            {
-                m_mouseClicked = true;
-            }
         }
         else
         {
             m_text.setColor(sf::Color::White);
+            m_mouseClicked = false; //Not our button, so set to false
         }
     }
     else
     {
+        m_mouseClicked = false; //Not our button, so set to false
         m_text.setColor(sf::Color::White);
-    }
-
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        m_mouseClicked = false;
     }
 }
 
 void Button::setCharacterSize(unsigned int x)
 {
     m_text.setCharacterSize(x);
-    this->setString(m_text.getString()); //Recenter text
+    setString(m_text.getString()); //Recenter text
 }
 
 void Button::setString(std::string str)
@@ -75,7 +84,11 @@ std::string Button::getString()
 
 bool Button::mouseClicked()
 {
-    return m_mouseClicked;
+    //we need to store the value in an old variable so that we can reset it before we return from the function
+    //we need to reset it because if the button does not update on the next frame (because it pushed or popped a state) then if it returns it will assume the mouse is still clicked
+    bool old = m_mouseClicked;
+    m_mouseClicked = false;
+    return old;
 }
 
 sf::Vector2u Button::getSize()

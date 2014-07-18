@@ -44,22 +44,17 @@ void PauseState::postDraw()
 {
     if (m_action == 1)
     {
-        sf::sleep(sf::seconds(0.1f));
-        std::cout << "Popping pause state\n";
         m_stateCollection.pop();
         m_action = 0;
     }
     else if (m_action == 2)
     {
-        sf::sleep(sf::seconds(0.1f));
-        std::cout << "Popping to main menu\n";
         m_stateCollection.pop();
         m_stateCollection.pop();
         m_action = 0;
     }
     else if (m_action == 3)
     {
-        std::cout << "closing window\n";
         m_window.close();
         m_action = 0;
     }
