@@ -8,7 +8,6 @@
 
 //SELF
 #include "ZGE/State/BaseState.hpp"
-#include "ZGE/State/StateCollection.hpp"
 #include "Player.hpp"
 
 class GameState : public zge::BaseState

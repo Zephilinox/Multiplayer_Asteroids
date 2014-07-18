@@ -14,6 +14,7 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
+					<Add directory="Multiplayer_Asteroids/include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-audio-s-d" />
@@ -30,6 +31,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="include" />
+					<Add directory="Multiplayer_Asteroids/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -46,6 +48,8 @@
 			<Add option="-fexceptions" />
 			<Add option="-DSFML_STATIC" />
 			<Add directory="Z:/Programming/C++/SFML-2.1/include" />
+			<Add directory="Z:/Programming/GithubRepositories/ZGE/include" />
+			<Add directory="Z:/Programming/GithubRepositories/ZGE/src" />
 			<Add directory="include" />
 			<Add directory="src" />
 		</Compiler>
@@ -55,29 +59,31 @@
 			<Add option="-static" />
 			<Add directory="Z:/Programming/C++/SFML-2.1/lib" />
 		</Linker>
+		<Unit filename="../ZGE/include/ZGE/ResourceManagement/Resource.hpp" />
+		<Unit filename="../ZGE/include/ZGE/ResourceManagement/ResourceCache.hpp" />
+		<Unit filename="../ZGE/include/ZGE/ResourceManagement/ResourceManager.hpp" />
+		<Unit filename="../ZGE/include/ZGE/State/BaseState.hpp" />
+		<Unit filename="../ZGE/include/ZGE/State/StateCollection.hpp" />
+		<Unit filename="../ZGE/include/ZGE/State/StateHandler.hpp" />
+		<Unit filename="../ZGE/include/ZGE/Utility.hpp" />
+		<Unit filename="../ZGE/include/ZGE/Vector.hpp" />
+		<Unit filename="../ZGE/src/ZGE/ResourceManagement/Resource.cpp" />
+		<Unit filename="../ZGE/src/ZGE/ResourceManagement/Resource.inl" />
+		<Unit filename="../ZGE/src/ZGE/ResourceManagement/ResourceCache.inl" />
+		<Unit filename="../ZGE/src/ZGE/ResourceManagement/ResourceManager.inl" />
+		<Unit filename="../ZGE/src/ZGE/State/BaseState.cpp" />
+		<Unit filename="../ZGE/src/ZGE/State/StateCollection.cpp" />
+		<Unit filename="../ZGE/src/ZGE/State/StateCollection.inl" />
+		<Unit filename="../ZGE/src/ZGE/State/StateHandler.cpp" />
+		<Unit filename="../ZGE/src/ZGE/Utility.cpp" />
+		<Unit filename="../ZGE/src/ZGE/Vector.cpp" />
 		<Unit filename="include/GameState.hpp" />
+		<Unit filename="include/KeybindingCache.hpp" />
 		<Unit filename="include/Player.hpp" />
-		<Unit filename="include/ZGE/ResourceManagement/Resource.hpp" />
-		<Unit filename="include/ZGE/ResourceManagement/ResourceCache.hpp" />
-		<Unit filename="include/ZGE/ResourceManagement/ResourceManager.hpp" />
-		<Unit filename="include/ZGE/State/BaseState.hpp" />
-		<Unit filename="include/ZGE/State/StateCollection.hpp" />
-		<Unit filename="include/ZGE/State/StateHandler.hpp" />
-		<Unit filename="include/ZGE/Utility.hpp" />
-		<Unit filename="include/ZGE/Vector.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/GameState.cpp" />
+		<Unit filename="src/KeybindingCache.cpp" />
 		<Unit filename="src/Player.cpp" />
-		<Unit filename="src/ZGE/ResourceManagement/Resource.cpp" />
-		<Unit filename="src/ZGE/ResourceManagement/Resource.inl" />
-		<Unit filename="src/ZGE/ResourceManagement/ResourceCache.inl" />
-		<Unit filename="src/ZGE/ResourceManagement/ResourceManager.inl" />
-		<Unit filename="src/ZGE/State/BaseState.cpp" />
-		<Unit filename="src/ZGE/State/StateCollection.cpp" />
-		<Unit filename="src/ZGE/State/StateCollection.inl" />
-		<Unit filename="src/ZGE/State/StateHandler.cpp" />
-		<Unit filename="src/ZGE/Utility.cpp" />
-		<Unit filename="src/ZGE/Vector.cpp" />
 		<Unit filename="textures/Bullet.png" />
 		<Unit filename="textures/Ship.png" />
 		<Unit filename="textures/Star.png" />

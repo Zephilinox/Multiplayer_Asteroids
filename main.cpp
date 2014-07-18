@@ -8,7 +8,7 @@
 #include "ZGE/Utility.hpp"
 #include "ZGE/State/StateHandler.hpp"
 #include "ZGE/State/BaseState.hpp"
-#include "GameState.hpp"
+#include "States/SplashState.hpp"
 
 int main()
 {
@@ -17,7 +17,7 @@ int main()
     window.setVerticalSyncEnabled(true);
 
     zge::StateHandler stateHandler;
-    stateHandler.getStateCollection().push<GameState>(window);
+    stateHandler.getStateCollection().push<SplashState>(window);
 
     sf::Clock frameTimer;
     sf::Time prevFrameTime = sf::seconds(1.f/60.f);
