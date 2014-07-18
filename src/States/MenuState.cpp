@@ -9,7 +9,8 @@
 
 MenuState::MenuState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
-m_menu(window)
+m_menu(window),
+m_action(0)
 {
     m_stateID = "MenuState";
 
@@ -45,11 +46,12 @@ void MenuState::postDraw()
 {
     if (m_action == 1)
     {
-        m_stateCollection.pop();
         m_stateCollection.push<GameState>(m_window);
+        m_action = 0;
     }
     else if (m_action == 2)
     {
         m_window.close();
+        m_action = 0;
     }
 }

@@ -62,7 +62,6 @@ void SplashState::postDraw()
 {
     if (m_timeSpentInState.getElapsedTime().asSeconds() >= 3.0f)
     {
-        m_stateCollection.pop();
         m_stateCollection.push<MenuState>(m_window);
     }
 }

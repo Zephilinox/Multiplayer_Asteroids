@@ -4,7 +4,8 @@
 #include <iostream>
 
 GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
-BaseState(window, stateCollection)
+BaseState(window, stateCollection),
+m_action(0)
 {
     m_stateID = "GameState";
     std::cout << "[GameState] Constructor\n";
@@ -28,6 +29,11 @@ void GameState::update(float dt)
     //std::cout << "[GameState] update\n";
     m_player1.update(dt);
     m_player2.update(dt);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+    {
+        m_action = 1;
+    }
 }
 
 void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -43,6 +49,10 @@ void GameState::postDraw()
     //since it's stored as a shared ptr, it will remain alive until there are no more references
     //which will be until this function ends
 
-    //m_stateCollection.pop();
+    if (m_action == 1)
+    {
+        m_stateCollection.pop();
+        m_action = 0;
+    }
     //m_stateCollection.push<GameState>(m_window);
 }
