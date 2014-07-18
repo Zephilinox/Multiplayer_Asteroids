@@ -11,7 +11,7 @@
 
 //SELF
 #include "KeybindingCache.hpp"
-#include "Bullet.hpp"
+#include "BulletManager.hpp"
 
 class Player : public sf::Drawable
 {
@@ -45,7 +45,7 @@ private:
 
     KeybindingCache m_keys;
 
-    std::vector<Bullet> m_bullets;
+    BulletManager m_bulletManager;
 };
 
 #endif //PLAYER_HPP

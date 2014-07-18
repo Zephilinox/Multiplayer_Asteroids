@@ -26,18 +26,12 @@ m_maxVelocityLength(m_acceleration * 2)
 
 void Player::handleEvent(const sf::Event& event)
 {
-    for (Bullet& b : m_bullets)
-    {
-        b.handleEvent(event);
-    }
+    m_bulletManager.handleEvent(event);
 }
 
 void Player::update(float dt)
 {
-    for (Bullet& b : m_bullets)
-    {
-        b.update(dt);
-    }
+    m_bulletManager.update(dt);
 
     movement(dt);
 
@@ -57,10 +51,7 @@ void Player::update(float dt)
 
     if (sf::Keyboard::isKeyPressed(m_keys.get("Shoot")))
     {
-        Bullet b(m_sprite.getPosition(), m_sprite.getRotation(), 400);
-        m_bullets.push_back(b);
-
-        std::cout << m_bullets.size() << "\n";
+        m_bulletManager.createBullet(m_sprite.getPosition(), m_sprite.getRotation(), 400, m_sprite.getColor());
     }
 
     capVelocity();
@@ -72,10 +63,7 @@ void Player::update(float dt)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    for (Bullet b : m_bullets)
-    {
-        target.draw(b, states);
-    }
+    target.draw(m_bulletManager, states);
 
     target.draw(m_sprite, states);
     zge::drawLine(target, m_sprite.getPosition().x, m_sprite.getPosition().y, m_sprite.getPosition().x + m_velocity.x, m_sprite.getPosition().y + m_velocity.y, sf::Color::Red);
