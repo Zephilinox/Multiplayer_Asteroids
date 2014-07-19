@@ -50,7 +50,7 @@ void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     sf::ConvexShape cs;
     float radius = 64; //from center to vertex
-    float height = 2 * radius * std::sin(zge::Vector::degToRad(60)); //from top to base
+    //float height = 2 * radius * std::sin(zge::Vector::degToRad(60)); //from top to base
 
     zge::Vector p1 = zge::Vector::degToVector(30);
     zge::Vector p2 = zge::Vector::degToVector(90);
@@ -60,76 +60,135 @@ void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
     zge::Vector p6 = zge::Vector::degToVector(330);
 
     cs.setPointCount(6);
+    cs.setPoint(0, sf::Vector2f(p1.x, p1.y) * (2*radius+((std::rand() % (int)radius) - radius/2)));
+    //cs.setPoint(1, sf::Vector2f(p2.x, p2.y) * (2*radius+((std::rand() % (int)radius) - radius/2)));
+    cs.setPoint(1, sf::Vector2f(p2.x, p2.y) * (radius + (std::rand() % 128 - 64)));
+    cs.setPoint(2, sf::Vector2f(p3.x, p3.y) * (2*radius+((std::rand() % (int)radius) - radius/2)));
+    cs.setPoint(3, sf::Vector2f(p4.x, p4.y) * (2*radius+((std::rand() % (int)radius) - radius/2)));
+    cs.setPoint(4, sf::Vector2f(p5.x, p5.y) * (2*radius+((std::rand() % (int)radius) - radius/2)));
+    cs.setPoint(5, sf::Vector2f(p6.x, p6.y) * (2*radius+((std::rand() % (int)radius) - radius/2)));
 
-    cs.setPoint(0, sf::Vector2f(p1.x, p1.y) * (radius + ((std::rand() % (int)radius) - radius/2)));
+    /*cs.setPoint(0, sf::Vector2f(p1.x, p1.y) * (radius + ((std::rand() % (int)radius) - radius/2)));
     cs.setPoint(1, sf::Vector2f(p2.x, p2.y) * (radius + ((std::rand() % (int)radius) - radius/2)));
-    cs.setPoint(1, sf::Vector2f(p2.x, p2.y) * (radius /2));
+    //cs.setPoint(1, sf::Vector2f(p2.x, p2.y) * (radius /3));
     cs.setPoint(2, sf::Vector2f(p3.x, p3.y) * (radius + ((std::rand() % (int)radius) - radius/2)));
     cs.setPoint(3, sf::Vector2f(p4.x, p4.y) * (radius + ((std::rand() % (int)radius) - radius/2)));
     cs.setPoint(4, sf::Vector2f(p5.x, p5.y) * (radius + ((std::rand() % (int)radius) - radius/2)));
-    //cs.setPoint(5, sf::Vector2f(p6.x, p6.y) * (radius + ((std::rand() % (int)radius) - radius/2)));
-    cs.setPoint(5, sf::Vector2f(p6.x, p6.y) * (radius / 3));
+    cs.setPoint(5, sf::Vector2f(p6.x, p6.y) * (radius + ((std::rand() % (int)radius) - radius/2)));*/
+    //cs.setPoint(5, sf::Vector2f(p6.x, p6.y) * (radius / 3));
 
-
-    //cs.setPoint(0, sf::Vector2f(p1.x, p1.y) * radius);
+    cs.setPoint(0, sf::Vector2f(p1.x, p1.y) * radius);
     //cs.setPoint(1, sf::Vector2f(p2.x, p2.y) * radius);
-    //cs.setPoint(2, sf::Vector2f(p3.x, p3.y) * radius);
+    cs.setPoint(2, sf::Vector2f(p3.x, p3.y) * radius);
     cs.setPoint(3, sf::Vector2f(p4.x, p4.y) * radius);
     cs.setPoint(4, sf::Vector2f(p5.x, p5.y) * radius);
-    //cs.setPoint(5, sf::Vector2f(p6.x, p6.y) * radius);
+    cs.setPoint(5, sf::Vector2f(p6.x, p6.y) * radius);
 
     cs.setPosition(center);
-    //zge::Vector pos1(cs.getPoint(0).x - cs.getPoint(1).x, cs.getPoint(0).y - cs.getPoint(1).y);
-    //zge::Vector pos2(cs.getPoint(2).x - cs.getPoint(1).x, cs.getPoint(2).y - cs.getPoint(1).y);
-
-    //zge::Vector pos1(cs.getPoint(1).x - cs.getPoint(0).x, cs.getPoint(1).y - cs.getPoint(0).y);
-    //zge::Vector pos2(cs.getPoint(1).x - cs.getPoint(2).x, cs.getPoint(1).y - cs.getPoint(2).y);
 
     zge::Vector pos1(cs.getPoint(1).x - cs.getPoint(0).x, cs.getPoint(1).y - cs.getPoint(0).y);
     zge::Vector pos2(cs.getPoint(2).x - cs.getPoint(1).x, cs.getPoint(2).y - cs.getPoint(1).y);
 
-    //zge::Vector pos1(cs.getPoint(1).x - cs.getPoint(0).x, cs.getPoint(1).y - cs.getPoint(0).y);
-    //zge::Vector pos2(cs.getPoint(2).x - cs.getPoint(0).x, cs.getPoint(2).y - cs.getPoint(0).y);
-
-        std::cout << pos1.x << ", " << pos1.y << "\n";
-        std::cout << pos2.x << ", " << pos2.y << "\n";
     target.draw(cs, states);
 
-    sf::ConvexShape cs2 = cs;
-    cs2.setFillColor(sf::Color::Red);
-    cs2.setPosition(center.x,
-                    center.y + height);
+    bool positiveCross = false;
+    bool is_convex = false;
 
-    target.draw(cs2, states);
-
-    sf::ConvexShape cs3 = cs;
-    cs3.setFillColor(sf::Color::Blue);
-    cs3.setPosition(center.x + radius + 0.5*radius, //add half because we want center of hexagon
-                    center.y + 0.5*height);
-
-    target.draw(cs3, states);
-
-
-    float angle = zge::Vector::radToDeg(std::acos(pos1.dot(pos2) / ((pos1.length() * pos2.length()))));
-    std::cout << "Angle = " << angle << "\n";
-
-    float cw_or_ccw = (pos1.x * pos2.y) - (pos1.y * pos2.x);
-    std::cout << "cw_or_ccw = " << cw_or_ccw << "\n";
-
-    if (cw_or_ccw < 0)
+    for (unsigned i = 0; i < 6; ++i)
     {
-        std::cout << "dot = " << pos1.dot(pos2) << "\n";
-        std::cout << "length1 = " << pos1.length() << "\n";
-        std::cout << "length2 = " << pos2.length() << "\n";
-        //std::cout << "Concave!\n";
-        sf::sleep(sf::seconds(0.5f));
+        if (i == 0)
+        {
+            zge::Vector v1(cs.getPoint(0).x - cs.getPoint(5).x, cs.getPoint(0).y - cs.getPoint(5).y);
+            zge::Vector v2(cs.getPoint(1).x - cs.getPoint(0).x, cs.getPoint(1).y - cs.getPoint(0).y);
+            if (((v1.x * v2.y) - (v1.y * v2.x)) > 0)
+            {
+                positiveCross = true;
+            }
+            else
+            {
+                positiveCross = false;
+            }
+        }
+        else if (i == 5)
+        {
+            zge::Vector v1(cs.getPoint(5).x - cs.getPoint(4).x, cs.getPoint(5).y - cs.getPoint(4).y);
+            zge::Vector v2(cs.getPoint(0).x - cs.getPoint(5).x, cs.getPoint(0).y - cs.getPoint(5).y);
+            if ((((v1.x * v2.y) - (v1.y * v2.x)) > 0 && positiveCross) ||
+                (((v1.x * v2.y) - (v1.y * v2.x)) < 0 && !positiveCross))
+            {
+                is_convex = true;
+            }
+        }
+        else
+        {
+            zge::Vector v1(cs.getPoint(i).x - cs.getPoint(i-1).x, cs.getPoint(i).y - cs.getPoint(i-1).y);
+            zge::Vector v2(cs.getPoint(i+1).x - cs.getPoint(i).x, cs.getPoint(i+1).y - cs.getPoint(i).y);
+            if ((((v1.x * v2.y) - (v1.y * v2.x)) > 0 && positiveCross) ||
+                (((v1.x * v2.y) - (v1.y * v2.x)) < 0 && !positiveCross))
+            {
+                is_convex = true;
+            }
+        }
     }
 
-    if (pos1.dot(pos2) < 0)
+    std::cout << "Is convex? " << is_convex << "\n";
+
+    //if (is_convex) sf::sleep(sf::seconds(1.2f));
+
+    //std::cout << zge::Vector::radToDeg(std::atan2((pos1.x * pos2.y) - (pos2.x * pos1.y), pos1.dot(pos2))) << "\n";
+    std::cout << (zge::Vector(0, -1)).dot(zge::Vector(1, 0)) << "\n";
+    //std::cout << zge::Vector::radToDeg(std::atan2((0 * 1) - (1 * 0), )) << "\n";
+
+    cs.getPoint(0);
+    cs.getPoint(1);
+    cs.getPoint(2);
+
+    double areaSum = 0;
+    areaSum += cs.getPoint(0).x * (-cs.getPoint(2).y - -cs.getPoint(1).y);
+    areaSum += cs.getPoint(1).x * (-cs.getPoint(0).y - -cs.getPoint(2).y);
+    areaSum += cs.getPoint(2).x * (-cs.getPoint(1).y - -cs.getPoint(0).y);
+
+    int winding = 0;
+    zge::Vector v1(cs.getPoint(0).x - cs.getPoint(5).x, cs.getPoint(0).y - cs.getPoint(5).y);
+    zge::Vector v2(cs.getPoint(1).x - cs.getPoint(0).x, cs.getPoint(1).y - cs.getPoint(0).y);
+    if (((v1.x * v2.y) - (v1.y * v2.x)) > 0)
     {
-        std::cout << "Actual Angle: " << 360 - angle << "\n";
-        sf::sleep(sf::seconds(0.5f));
+        std::cout << "winding > 0\n";
+        winding = 1;
     }
+    else
+    {
+        std::cout << "winding < 0\n";
+        winding = -1;
+    }
+
+
+    std::cout << areaSum << "\n";
+
+    if (winding == 1)
+    {
+        if (areaSum < 0)
+        {
+            //sf::sleep(sf::seconds(1.f));
+        }
+        else
+        {
+            sf::sleep(sf::seconds(0.5f));
+        }
+    }
+    else if (winding == -1)
+    {
+        if (areaSum > 0)
+        {
+            //sf::sleep(sf::seconds(1.f));
+        }
+        else
+        {
+            sf::sleep(sf::seconds(0.5f));
+        }
+    }
+
+
 }
 
 void GameState::postDraw()
