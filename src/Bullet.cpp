@@ -3,6 +3,7 @@
 Bullet::Bullet(sf::Vector2f pos, float rotation, float speed, sf::Color col):
 m_texture("textures/bullet.png"),
 m_speed(speed),
+m_velocity(1, 1),
 m_warpCount(0)
 {
     m_sprite.setTexture(m_texture);
@@ -12,7 +13,7 @@ m_warpCount(0)
     m_sprite.setRotation(rotation);
     m_sprite.setColor(col);
 
-    m_velocity = zge::Vector::degToVector(rotation);
+    m_velocity *= zge::Vector::degToVector(rotation);
     m_velocity *= m_speed;
 }
 

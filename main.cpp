@@ -12,6 +12,7 @@
 
 int main()
 {
+    std::srand(std::time(nullptr));
     /**
         Player 1 has to destroy the asteroids without getting hit more than x times per level.
         This is done by shooting them, which increases your score.
@@ -74,7 +75,7 @@ int main()
         stateHandler.postDraw();
 
         prevFrameTime = frameTimer.restart();
-        std::cout << "FPS: " << 1.f / prevFrameTime.asSeconds() << "\n";
+        //std::cout << "FPS: " << 1.f / prevFrameTime.asSeconds() << "\n";
     }
 
     return 0;

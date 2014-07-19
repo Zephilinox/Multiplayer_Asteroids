@@ -77,6 +77,7 @@
 		<Unit filename="../ZGE/src/ZGE/State/StateHandler.cpp" />
 		<Unit filename="../ZGE/src/ZGE/Utility.cpp" />
 		<Unit filename="../ZGE/src/ZGE/Vector.cpp" />
+		<Unit filename="include/Asteroid.hpp" />
 		<Unit filename="include/Bullet.hpp" />
 		<Unit filename="include/BulletManager.hpp" />
 		<Unit filename="include/Button.hpp" />
@@ -88,6 +89,7 @@
 		<Unit filename="include/States/PauseState.hpp" />
 		<Unit filename="include/States/SplashState.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Asteroid.cpp" />
 		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/BulletManager.cpp" />
 		<Unit filename="src/Button.cpp" />

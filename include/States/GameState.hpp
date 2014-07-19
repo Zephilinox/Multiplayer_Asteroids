@@ -10,6 +10,7 @@
 #include "ZGE/State/BaseState.hpp"
 #include "ZGE/State/StateCollection.hpp"
 #include "Player.hpp"
+#include "Asteroid.hpp"
 
 class GameState : public zge::BaseState
 {
@@ -23,6 +24,7 @@ public:
 private:
     Player m_player1;
     Player m_player2;
+    Asteroid m_asteroid1;
 
     int m_action;
 };
