@@ -34,7 +34,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(1280, 720, 32), "Multiplayer Asteroids");
     //window.setFramerateLimit(60);
-    window.setVerticalSyncEnabled(true);
+    //window.setVerticalSyncEnabled(true);
 
     zge::StateHandler stateHandler;
     stateHandler.getStateCollection().push<SplashState>(window);
