@@ -48,10 +48,16 @@ void GameState::update(float dt)
         m_level.nextLevel();
     }
 
-    m_level.checkCollision(m_player1.getCollisionShape());
-    m_player1.checkCollision(m_level);
-    m_level.checkCollision(m_player2.getCollisionShape());
-    m_player2.checkCollision(m_level);
+    for (unsigned i = 0; i < m_level.getAsteroids().size(); ++i)
+    {
+        Asteroid& a = m_level.getAsteroids()[i];
+
+        a.checkCollision(m_player1.getCollisionShape());
+        m_player1.checkCollision(a.getCollisionShape());
+
+        a.checkCollision(m_player2.getCollisionShape());
+        m_player2.checkCollision(a.getCollisionShape());
+    }
 }
 
 void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const

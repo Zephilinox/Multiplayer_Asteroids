@@ -13,8 +13,9 @@
 #include "KeybindingCache.hpp"
 #include "BulletManager.hpp"
 #include "Level.hpp"
+#include "Collider.hpp"
 
-class Player : public sf::Drawable
+class Player : public sf::Drawable, public Collider
 {
 public:
     Player(sf::RenderWindow& window);
@@ -30,16 +31,13 @@ public:
     void setGravityPosition(zge::Vector pos);
 
     zge::Vector getPosition();
-    sf::CircleShape getCollisionShape() const;
 
-    void checkCollision(sf::CircleShape otherCollisionShape);
-    void checkCollision(const Level& level);
+    void handleCollision(sf::CircleShape otherColShape) override;
 
 private:
     void movement(float dt);
     void capVelocity();
     void keepInWindow();
-    void handleCollision();
 
     sf::RenderWindow& m_window;
     mutable sf::Sprite m_sprite;

@@ -81,6 +81,7 @@
 		<Unit filename="include/Bullet.hpp" />
 		<Unit filename="include/BulletManager.hpp" />
 		<Unit filename="include/Button.hpp" />
+		<Unit filename="include/Collider.hpp" />
 		<Unit filename="include/KeybindingCache.hpp" />
 		<Unit filename="include/Level.hpp" />
 		<Unit filename="include/Menu.hpp" />
@@ -94,6 +95,7 @@
 		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/BulletManager.cpp" />
 		<Unit filename="src/Button.cpp" />
+		<Unit filename="src/Collider.cpp" />
 		<Unit filename="src/KeybindingCache.cpp" />
 		<Unit filename="src/Level.cpp" />
 		<Unit filename="src/Menu.cpp" />
@@ -106,6 +108,7 @@
 		<Unit filename="textures/Ship.png" />
 		<Unit filename="textures/Star.png" />
 		<Unit filename="textures/ZX-128.png" />
+		<Unit filename="textures/button.png" />
 		<Extensions>
 			<code_completion />
 			<envvars />

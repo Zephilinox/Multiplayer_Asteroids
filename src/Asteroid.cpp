@@ -1,6 +1,7 @@
 #include "Asteroid.hpp"
 
 Asteroid::Asteroid(sf::Vector2f pos, unsigned sides, float speed):
+Collider(sides),
 m_velocity(1, 1),
 m_speed(speed),
 m_isColliding(false)
@@ -24,6 +25,8 @@ m_isColliding(false)
     //std::cout << "ang = " << angle << "\n";
 
     m_rotationSpeed = (std::rand() % int((speed*2)/sides)) - speed/sides;
+
+    m_collisionShape.setFillColor(sf::Color(0, 255, 255, 100));
 }
 
 void Asteroid::handleEvent(const sf::Event& event)
@@ -37,6 +40,10 @@ void Asteroid::update(float dt)
     m_shape.move(m_velocity.x * dt, m_velocity.y * dt);
 
     keepInWindow();
+
+    updateCollisionShape(m_shape.getPosition(),
+                         m_radius,
+                         m_shape.getRotation());
 }
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -54,31 +61,7 @@ void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(m_shape, states);
     }
 
-    sf::CircleShape cs = getCollisionShape();
-    cs.setFillColor(sf::Color(0, 255, 255, 100));
-    target.draw(cs, states);
-}
-
-void Asteroid::checkCollision(sf::CircleShape otherCollisionShape)
-{
-    sf::CircleShape colShape = getCollisionShape();
-
-    zge::Vector distance(colShape.getPosition().x - otherCollisionShape.getPosition().x,
-                         colShape.getPosition().y - otherCollisionShape.getPosition().y);
-
-    if (distance.length() < colShape.getRadius() + otherCollisionShape.getRadius())
-    {
-        handleCollision();
-    }
-}
-
-sf::CircleShape Asteroid::getCollisionShape() const
-{
-    sf::CircleShape colShape(m_radius, m_shape.getPointCount());
-    colShape.setOrigin(m_radius, m_radius);
-    colShape.setPosition(m_shape.getPosition());
-    colShape.setRotation(m_shape.getRotation()); //Unnecessary for collisions, but nice for debug drawing;
-    return colShape;
+    target.draw(m_collisionShape, states);
 }
 
 void Asteroid::keepInWindow()
@@ -116,7 +99,7 @@ void Asteroid::createShape(unsigned sides)
     }
 }
 
-void Asteroid::handleCollision()
+void Asteroid::handleCollision(sf::CircleShape otherColShape)
 {
     m_alive = false;
     m_isColliding = true;

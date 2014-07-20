@@ -8,8 +8,9 @@
 #include <ZGE/Vector.hpp>
 
 //SELF
+#include "Collider.hpp"
 
-class Asteroid : public sf::Drawable
+class Asteroid : public sf::Drawable, public Collider
 {
 
 public:
@@ -19,15 +20,12 @@ public:
     void update(float dt);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-    void checkCollision(sf::CircleShape otherCollisionShape);
+    void handleCollision(sf::CircleShape otherColShape) override;
     void isAlive();
-
-    sf::CircleShape getCollisionShape() const;
 
 private:
     void keepInWindow();
     void createShape(unsigned sides);
-    void handleCollision();
 
     bool m_alive;
     mutable sf::ConvexShape m_shape;

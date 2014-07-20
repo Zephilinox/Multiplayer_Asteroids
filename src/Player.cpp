@@ -9,6 +9,7 @@
 #include "ZGE/Utility.hpp"
 
 Player::Player(sf::RenderWindow& window):
+Collider(32),
 m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
@@ -24,6 +25,8 @@ m_isColliding(false)
 
     m_sprite.setPosition(window.getView().getCenter().x, window.getView().getCenter().y);
     useWASD();
+
+    m_collisionShape.setFillColor(sf::Color(0, 255, 255, 100));
 }
 
 void Player::handleEvent(const sf::Event& event)
@@ -68,6 +71,10 @@ void Player::update(float dt)
     }
 
     keepInWindow();
+
+    updateCollisionShape(m_sprite.getPosition(),
+                         ((m_texture->getSize().x / 2) + (m_texture->getSize().y / 2)) / 2, //radius
+                         m_sprite.getRotation());
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -87,9 +94,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(m_sprite, states);
     }
 
-    sf::CircleShape cs = getCollisionShape();
-    cs.setFillColor(sf::Color(0, 255, 255, 100));
-    target.draw(cs, states);
+    target.draw(m_collisionShape, states);
 }
 
 void Player::useWASD()
@@ -120,37 +125,6 @@ void Player::setColor(sf::Color c)
 zge::Vector Player::getPosition()
 {
     return zge::Vector(m_sprite.getPosition().x, m_sprite.getPosition().y);
-}
-
-sf::CircleShape Player::getCollisionShape() const
-{
-    float radius = ((m_texture->getSize().x / 2) + (m_texture->getSize().y / 2)) / 2;
-    sf::CircleShape colShape(radius, 32);
-    colShape.setOrigin(radius, radius);
-    colShape.setPosition(m_sprite.getPosition().x, m_sprite.getPosition().y);
-    colShape.setRotation(m_sprite.getRotation()); //Unnecessary for collisions, but nice for debug drawing;
-    return colShape;
-}
-
-void Player::checkCollision(sf::CircleShape otherCollisionShape)
-{
-    sf::CircleShape colShape = getCollisionShape();
-
-    zge::Vector distance(colShape.getPosition().x - otherCollisionShape.getPosition().x,
-                         colShape.getPosition().y - otherCollisionShape.getPosition().y);
-
-    if (distance.length() < colShape.getRadius() + otherCollisionShape.getRadius())
-    {
-        handleCollision();
-    }
-}
-
-void Player::checkCollision(const Level& level)
-{
-    for (Asteroid a : level.getAsteroids())
-    {
-        checkCollision(a.getCollisionShape());
-    }
 }
 
 void Player::movement(float dt)
@@ -210,7 +184,7 @@ void Player::keepInWindow()
     }
 }
 
-void Player::handleCollision()
+void Player::handleCollision(sf::CircleShape otherColShape)
 {
     m_isColliding = true;
 }

@@ -78,15 +78,7 @@ void Level::restartLevel()
                              m_levelTitle.getLocalBounds().height + m_levelTitle.getLocalBounds().top);
 }
 
-void Level::checkCollision(sf::CircleShape otherCollisionShape)
-{
-    for (Asteroid& a : m_asteroids)
-    {
-        a.checkCollision(otherCollisionShape);
-    }
-}
-
-const std::vector<Asteroid> Level::getAsteroids() const
+std::vector<Asteroid>& Level::getAsteroids() const
 {
     return m_asteroids;
 }
