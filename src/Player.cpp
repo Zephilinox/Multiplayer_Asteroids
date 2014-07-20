@@ -8,10 +8,9 @@
 //SELF
 #include "ZGE/Utility.hpp"
 
-Player::Player(sf::RenderWindow& window, BulletManager& bulletManager):
+Player::Player(sf::RenderWindow& window):
 Collider(32),
 m_window(window),
-m_bulletManager(bulletManager),
 m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2),
@@ -32,10 +31,13 @@ m_isColliding(false)
 
 void Player::handleEvent(const sf::Event& event)
 {
+    m_bulletManager.handleEvent(event);
 }
 
 void Player::update(float dt)
 {
+    m_bulletManager.update(dt);
+
     movement(dt);
 
     if (sf::Keyboard::isKeyPressed(m_keys.get("Decelerate")))
@@ -61,7 +63,6 @@ void Player::update(float dt)
     if (sf::Keyboard::isKeyPressed(m_keys.get("Shoot")) &&
         m_shootCooldown.getElapsedTime().asSeconds() >= m_shootDelay.asSeconds())
     {
-        std::cout << "Shooting!\n";
         m_shootCooldown.restart();
         sf::Vector2f gunPos = m_sprite.getPosition();
         gunPos.x += m_velocity.x * dt;
@@ -78,6 +79,8 @@ void Player::update(float dt)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    target.draw(m_bulletManager, states);
+
     if (m_isColliding)
     {
         sf::Color oldCol = m_sprite.getColor();

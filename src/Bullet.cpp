@@ -1,13 +1,10 @@
 #include "Bullet.hpp"
 
 Bullet::Bullet(sf::Vector2f pos, float rotation, float speed, sf::Color col):
-//Collider(4),
 m_texture("textures/bullet.png"),
 m_speed(speed),
 m_velocity(1, 1),
-m_warpCount(0),
-m_isColliding(false),
-m_isAlive(true)
+m_warpCount(0)
 {
     m_sprite.setTexture(m_texture);
     m_sprite.setOrigin(m_texture->getSize().x / 2,
@@ -18,8 +15,6 @@ m_isAlive(true)
 
     m_velocity *= zge::Vector::degToVector(rotation);
     m_velocity *= m_speed;
-
-    //m_collisionShape.setFillColor(sf::Color(0, 255, 255, 100));
 }
 
 void Bullet::handleEvent(const sf::Event& event)
@@ -32,34 +27,12 @@ void Bullet::update(float dt)
     m_sprite.move(m_velocity.x * dt, m_velocity.y * dt);
 
     keepInWindow();
-
-    /*updateCollisionShape(m_sprite.getPosition(),
-                         ((m_texture->getSize().x / 2) + (m_texture->getSize().y / 2)) / 2, //radius
-                         m_sprite.getRotation());*/
 }
 
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    //if (m_isColliding)
-    {
-        //sf::Color oldCol = m_sprite.getColor();
-        //m_sprite.setColor(sf::Color::Magenta);
-        target.draw(m_sprite, states);
-        //m_sprite.setColor(oldCol);
-    }
-    //else
-    {
-        //target.draw(m_sprite, states);
-    }
-
-    //target.draw(m_collisionShape);
+    target.draw(m_sprite, states);
 }
-
-/*void Bullet::handleCollision(sf::CircleShape otherColShape)
-{
-    m_isColliding = true;
-    m_isAlive = false;
-}*/
 
 sf::Color Bullet::getColor()
 {

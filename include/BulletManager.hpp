@@ -20,8 +20,6 @@ public:
 
     void createBullet(sf::Vector2f pos, float rotation, float speed, sf::Color col);
 
-    std::vector<Bullet>& getBullets();
-
 private:
     std::vector<Bullet> m_bullets;
 };

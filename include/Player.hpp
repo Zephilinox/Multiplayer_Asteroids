@@ -18,7 +18,7 @@
 class Player : public sf::Drawable, public Collider
 {
 public:
-    Player(sf::RenderWindow& window, BulletManager& bulletManager);
+    Player(sf::RenderWindow& window);
 
     void handleEvent(const sf::Event& event);
     void update(float dt);
@@ -40,7 +40,6 @@ private:
     void keepInWindow();
 
     sf::RenderWindow& m_window;
-    BulletManager& m_bulletManager;
     mutable sf::Sprite m_sprite;
     mutable zge::Resource<sf::Texture> m_texture;
 
@@ -50,6 +49,7 @@ private:
 
     KeybindingCache m_keys;
 
+    BulletManager m_bulletManager;
     sf::Clock m_shootCooldown;
     sf::Time m_shootDelay;
 
