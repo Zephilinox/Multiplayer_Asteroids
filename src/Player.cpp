@@ -67,7 +67,7 @@ void Player::update(float dt)
         sf::Vector2f gunPos = m_sprite.getPosition();
         gunPos.x += m_velocity.x * dt;
         gunPos.y += m_velocity.y * dt;
-        m_bulletManager.createBullet(gunPos, m_sprite.getRotation(), 800, m_sprite.getColor());
+        m_bulletManager.createBullet(gunPos, m_sprite.getRotation(), 100, m_sprite.getColor());
     }
 
     keepInWindow();
