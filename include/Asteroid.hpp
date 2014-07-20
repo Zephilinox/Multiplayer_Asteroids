@@ -19,10 +19,10 @@ public:
     void update(float dt);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-    void checkCollision(sf::FloatRect otherCollisionBox);
+    void checkCollision(sf::CircleShape otherCollisionShape);
     void isAlive();
 
-    sf::FloatRect getCollisionBox();
+    sf::CircleShape getCollisionShape() const;
 
 private:
     void keepInWindow();

@@ -53,25 +53,32 @@ void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         target.draw(m_shape, states);
     }
+
+    sf::CircleShape cs = getCollisionShape();
+    cs.setFillColor(sf::Color(0, 255, 255, 100));
+    target.draw(cs, states);
 }
 
-void Asteroid::checkCollision(sf::FloatRect otherCollisionBox)
+void Asteroid::checkCollision(sf::CircleShape otherCollisionShape)
 {
-    sf::FloatRect colBox = getCollisionBox();
+    sf::CircleShape colShape = getCollisionShape();
 
-    if (colBox.intersects(otherCollisionBox))
+    zge::Vector distance(colShape.getPosition().x - otherCollisionShape.getPosition().x,
+                         colShape.getPosition().y - otherCollisionShape.getPosition().y);
+
+    if (distance.length() < colShape.getRadius() + otherCollisionShape.getRadius())
     {
         handleCollision();
     }
 }
 
-sf::FloatRect Asteroid::getCollisionBox()
+sf::CircleShape Asteroid::getCollisionShape() const
 {
-    sf::FloatRect colBox(m_shape.getPosition().x - m_radius, //position is set to the center of the shape, so we need to subtract the radius;
-                         m_shape.getPosition().y - m_radius,
-                         m_radius * 2,
-                         m_radius * 2);
-    return colBox;
+    sf::CircleShape colShape(m_radius, m_shape.getPointCount());
+    colShape.setOrigin(m_radius, m_radius);
+    colShape.setPosition(m_shape.getPosition());
+    colShape.setRotation(m_shape.getRotation()); //Unnecessary for collisions, but nice for debug drawing;
+    return colShape;
 }
 
 void Asteroid::keepInWindow()

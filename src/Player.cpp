@@ -87,7 +87,9 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(m_sprite, states);
     }
 
-    //zge::drawLine(target, m_sprite.getPosition().x, m_sprite.getPosition().y, m_sprite.getPosition().x + m_velocity.x, m_sprite.getPosition().y + m_velocity.y, sf::Color::Red);
+    sf::CircleShape cs = getCollisionShape();
+    cs.setFillColor(sf::Color(0, 255, 255, 100));
+    target.draw(cs, states);
 }
 
 void Player::useWASD()
@@ -120,20 +122,24 @@ zge::Vector Player::getPosition()
     return zge::Vector(m_sprite.getPosition().x, m_sprite.getPosition().y);
 }
 
-sf::FloatRect Player::getCollisionBox()
+sf::CircleShape Player::getCollisionShape() const
 {
-    sf::FloatRect colBox(m_sprite.getPosition().x,
-                         m_sprite.getPosition().y,
-                         m_texture->getSize().x,
-                         m_texture->getSize().y);
-    return colBox;
+    float radius = ((m_texture->getSize().x / 2) + (m_texture->getSize().y / 2)) / 2;
+    sf::CircleShape colShape(radius, 32);
+    colShape.setOrigin(radius, radius);
+    colShape.setPosition(m_sprite.getPosition().x, m_sprite.getPosition().y);
+    colShape.setRotation(m_sprite.getRotation()); //Unnecessary for collisions, but nice for debug drawing;
+    return colShape;
 }
 
-void Player::checkCollision(sf::FloatRect otherCollisionBox)
+void Player::checkCollision(sf::CircleShape otherCollisionShape)
 {
-    sf::FloatRect colBox = getCollisionBox();
+    sf::CircleShape colShape = getCollisionShape();
 
-    if (colBox.intersects(otherCollisionBox))
+    zge::Vector distance(colShape.getPosition().x - otherCollisionShape.getPosition().x,
+                         colShape.getPosition().y - otherCollisionShape.getPosition().y);
+
+    if (distance.length() < colShape.getRadius() + otherCollisionShape.getRadius())
     {
         handleCollision();
     }
@@ -143,7 +149,7 @@ void Player::checkCollision(const Level& level)
 {
     for (Asteroid a : level.getAsteroids())
     {
-        checkCollision(a.getCollisionBox());
+        checkCollision(a.getCollisionShape());
     }
 }
 

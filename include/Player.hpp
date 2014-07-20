@@ -30,9 +30,9 @@ public:
     void setGravityPosition(zge::Vector pos);
 
     zge::Vector getPosition();
-    sf::FloatRect getCollisionBox();
+    sf::CircleShape getCollisionShape() const;
 
-    void checkCollision(sf::FloatRect otherCollisionBox);
+    void checkCollision(sf::CircleShape otherCollisionShape);
     void checkCollision(const Level& level);
 
 private:
@@ -43,7 +43,7 @@ private:
 
     sf::RenderWindow& m_window;
     mutable sf::Sprite m_sprite;
-    zge::Resource<sf::Texture> m_texture;
+    mutable zge::Resource<sf::Texture> m_texture;
 
     float m_acceleration;
     zge::Vector m_velocity;

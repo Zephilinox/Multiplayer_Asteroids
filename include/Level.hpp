@@ -29,7 +29,7 @@ public:
 
     void nextLevel();
     void restartLevel();
-    void checkCollision(sf::FloatRect otherCollisionBox); //make collision abstract class?
+    void checkCollision(sf::CircleShape otherCollisionShape); //make collision abstract class?
 
     const std::vector<Asteroid> getAsteroids() const;
 

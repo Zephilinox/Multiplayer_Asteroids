@@ -78,11 +78,11 @@ void Level::restartLevel()
                              m_levelTitle.getLocalBounds().height + m_levelTitle.getLocalBounds().top);
 }
 
-void Level::checkCollision(sf::FloatRect otherCollisionBox)
+void Level::checkCollision(sf::CircleShape otherCollisionShape)
 {
     for (Asteroid& a : m_asteroids)
     {
-        a.checkCollision(otherCollisionBox);
+        a.checkCollision(otherCollisionShape);
     }
 }
 

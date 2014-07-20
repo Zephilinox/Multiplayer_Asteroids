@@ -48,9 +48,9 @@ void GameState::update(float dt)
         m_level.nextLevel();
     }
 
-    m_level.checkCollision(m_player1.getCollisionBox());
+    m_level.checkCollision(m_player1.getCollisionShape());
     m_player1.checkCollision(m_level);
-    m_level.checkCollision(m_player2.getCollisionBox());
+    m_level.checkCollision(m_player2.getCollisionShape());
     m_player2.checkCollision(m_level);
 }
 
