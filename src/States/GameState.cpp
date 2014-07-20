@@ -42,6 +42,11 @@ void GameState::update(float dt)
     {
         m_action = 1;
     }
+
+    if (m_level.getFinishState() == FinishState::Finished)
+    {
+        m_level.nextLevel();
+    }
 }
 
 void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const

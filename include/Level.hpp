@@ -13,6 +13,10 @@
 
 enum FinishState {Unfinished, Finished, Lost};
 
+/*
+Perhaps have waves, so that higher levels last longer without becoming impossible due to number of asteroids on screen.
+*/
+
 class Level : public sf::Drawable
 {
 public:
