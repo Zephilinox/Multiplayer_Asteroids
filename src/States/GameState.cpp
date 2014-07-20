@@ -12,7 +12,7 @@ GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollec
 BaseState(window, stateCollection),
 m_player1(window),
 m_player2(window),
-m_asteroid1(m_window.getView().getCenter(), 12, 100), //each side increases radius by 8, with 5 sides = 8; 6 = 16, 7 = 24, 8 = 32, 9 = 40, 10 = 48, 11 = 56, 12 = 64|||((sides-4)*8)
+m_level(window, 1),
 m_action(0)
 {
     m_stateID = "GameState";
@@ -29,14 +29,14 @@ void GameState::handleEvent(const sf::Event& event)
 {
     m_player1.handleEvent(event);
     m_player2.handleEvent(event);
-    m_asteroid1.handleEvent(event);
+    m_level.handleEvent(event);
 }
 
 void GameState::update(float dt)
 {
     m_player1.update(dt);
     m_player2.update(dt);
-    m_asteroid1.update(dt);
+    m_level.update(dt);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
@@ -48,7 +48,7 @@ void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_player1, states);
     target.draw(m_player2, states);
-    target.draw(m_asteroid1, states);
+    target.draw(m_level, states);
 }
 
 void GameState::postDraw()

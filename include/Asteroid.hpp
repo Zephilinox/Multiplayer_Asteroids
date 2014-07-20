@@ -27,6 +27,7 @@ private:
     zge::Vector m_velocity;
     float m_radius;
     float m_speed;
+    float m_rotationSpeed;
 };
 
 #endif //ASTEROID_HPP

@@ -13,7 +13,7 @@ m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2),
-m_shootDelay(sf::seconds(0.2f))
+m_shootDelay(sf::seconds(0.5f))
 {
     m_texture->setSmooth(true);
 

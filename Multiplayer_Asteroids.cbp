@@ -82,6 +82,7 @@
 		<Unit filename="include/BulletManager.hpp" />
 		<Unit filename="include/Button.hpp" />
 		<Unit filename="include/KeybindingCache.hpp" />
+		<Unit filename="include/Level.hpp" />
 		<Unit filename="include/Menu.hpp" />
 		<Unit filename="include/Player.hpp" />
 		<Unit filename="include/States/GameState.hpp" />
@@ -94,6 +95,7 @@
 		<Unit filename="src/BulletManager.cpp" />
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/KeybindingCache.cpp" />
+		<Unit filename="src/Level.cpp" />
 		<Unit filename="src/Menu.cpp" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/States/GameState.cpp" />

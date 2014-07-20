@@ -18,7 +18,11 @@ m_speed(speed)
     int angle = std::rand() % 360;
     m_velocity *= zge::Vector::degToVector(angle);
     m_velocity *= m_speed;
-    std::cout << "ang = " << angle << "\n";
+    m_velocity /= sides;
+    std::cout << m_velocity.x << ", " << m_velocity.y << "\n";
+    //std::cout << "ang = " << angle << "\n";
+
+    m_rotationSpeed = (std::rand() % int((speed*2)/sides)) - speed/sides;
 }
 
 void Asteroid::handleEvent(const sf::Event& event)
@@ -28,6 +32,7 @@ void Asteroid::handleEvent(const sf::Event& event)
 
 void Asteroid::update(float dt)
 {
+    m_shape.rotate(m_rotationSpeed * dt);
     m_shape.move(m_velocity.x * dt, m_velocity.y * dt);
 
     keepInWindow();
@@ -69,6 +74,6 @@ void Asteroid::createShape(unsigned sides)
     {
         zge::Vector angleDir = zge::Vector::degToVector(exteriorAngle * i);
         m_shape.setPoint(i, sf::Vector2f(angleDir.x, angleDir.y) * m_radius);
-        std::cout << angleDir.x * m_radius << ", " << angleDir.y * m_radius << "\n";
+        //std::cout << angleDir.x * m_radius << ", " << angleDir.y * m_radius << "\n";
     }
 }
