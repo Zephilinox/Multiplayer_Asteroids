@@ -21,7 +21,7 @@ void BulletManager::update(float dt)
     }
 
     m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(),
-                                   [](Bullet b)
+                                   [](Bullet& b)
                                     {
                                         return b.getWarpCount() > 1;
                                     }
@@ -30,9 +30,10 @@ void BulletManager::update(float dt)
 
 void BulletManager::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    for (Bullet b : m_bullets)
+    //Don't use for-each as it creates a local copy each time
+    for (unsigned i = 0; i < m_bullets.size(); ++i)
     {
-        target.draw(b, states);
+        target.draw(m_bullets[i], states);
     }
 }
 
