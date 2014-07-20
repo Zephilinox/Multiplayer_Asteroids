@@ -22,8 +22,12 @@ public:
     void postDraw() override;
 
 private:
+    BulletManager m_bulletManager1;
+    BulletManager m_bulletManager2;
+
     Player m_player1;
     Player m_player2;
+
     Level m_level;
 
     int m_action;

@@ -9,8 +9,9 @@
 #include <ZGE/ResourceManagement/Resource.hpp>
 
 //SELF
+#include "Collider.hpp"
 
-class Bullet : public sf::Drawable
+class Bullet : public sf::Drawable//, public Collider
 {
 public:
     Bullet(sf::Vector2f pos, float rotation, float speed, sf::Color col);
@@ -19,8 +20,9 @@ public:
     void update(float dt);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-    sf::Color getColor();
+    //void handleCollision(sf::CircleShape otherColShape) override;
 
+    sf::Color getColor();
     unsigned getWarpCount();
 
 private:
@@ -33,6 +35,9 @@ private:
     zge::Vector m_velocity;
 
     unsigned m_warpCount;
+
+    bool m_isColliding;
+    bool m_isAlive;
 };
 
 #endif //BULLET_HPP

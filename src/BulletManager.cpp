@@ -38,5 +38,11 @@ void BulletManager::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 
 void BulletManager::createBullet(sf::Vector2f pos, float rotation, float speed, sf::Color col)
 {
-    m_bullets.push_back(Bullet(pos, rotation, speed, col));
+    Bullet b = Bullet(pos, rotation, speed, col);
+    m_bullets.push_back(b);
+}
+
+std::vector<Bullet>& BulletManager::getBullets()
+{
+    return m_bullets;
 }

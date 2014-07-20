@@ -10,8 +10,10 @@
 
 GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
-m_player1(window),
-m_player2(window),
+m_bulletManager1(),
+m_bulletManager2(),
+m_player1(window, m_bulletManager1),
+m_player2(window, m_bulletManager2),
 m_level(window, 0),
 m_action(0)
 {
@@ -27,6 +29,8 @@ m_action(0)
 
 void GameState::handleEvent(const sf::Event& event)
 {
+    m_bulletManager1.handleEvent(event);
+    m_bulletManager2.handleEvent(event);
     m_player1.handleEvent(event);
     m_player2.handleEvent(event);
     m_level.handleEvent(event);
@@ -34,6 +38,8 @@ void GameState::handleEvent(const sf::Event& event)
 
 void GameState::update(float dt)
 {
+    m_bulletManager1.update(dt);
+    m_bulletManager2.update(dt);
     m_player1.update(dt);
     m_player2.update(dt);
     m_level.update(dt);
@@ -48,9 +54,23 @@ void GameState::update(float dt)
         m_level.nextLevel();
     }
 
-    for (unsigned i = 0; i < m_level.getAsteroids().size(); ++i)
+    for (unsigned iAsteroid = 0; iAsteroid < m_level.getAsteroids().size(); ++iAsteroid)
     {
-        Asteroid& a = m_level.getAsteroids()[i];
+        Asteroid& a = m_level.getAsteroids()[iAsteroid];
+
+        for (unsigned iBullet = 0; iBullet < m_bulletManager1.getBullets().size(); ++iBullet)
+        {
+            //Bullet& b = m_bulletManager1.getBullets()[iBullet];
+            //b.checkCollision(a.getCollisionShape());
+            //a.checkCollision(b.getCollisionShape());
+        }
+
+        for (unsigned iBullet = 0; iBullet < m_bulletManager2.getBullets().size(); ++iBullet)
+        {
+            //Bullet& b = m_bulletManager2.getBullets()[iBullet];
+            //b.checkCollision(a.getCollisionShape());
+            //a.checkCollision(b.getCollisionShape());
+        }
 
         a.checkCollision(m_player1.getCollisionShape());
         m_player1.checkCollision(a.getCollisionShape());
@@ -62,6 +82,8 @@ void GameState::update(float dt)
 
 void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    target.draw(m_bulletManager1, states);
+    target.draw(m_bulletManager2, states);
     target.draw(m_player1, states);
     target.draw(m_player2, states);
     target.draw(m_level, states);
