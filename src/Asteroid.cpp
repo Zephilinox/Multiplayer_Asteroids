@@ -2,7 +2,8 @@
 
 Asteroid::Asteroid(sf::Vector2f pos, unsigned sides, float speed):
 m_velocity(1, 1),
-m_speed(speed)
+m_speed(speed),
+m_isColliding(false)
 {
     if (sides < 5)
     {
@@ -40,7 +41,37 @@ void Asteroid::update(float dt)
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(m_shape, states);
+    if (m_isColliding)
+    {
+        sf::Color col = m_shape.getFillColor();
+        m_shape.setFillColor(sf::Color::Magenta);
+        target.draw(m_shape, states);
+        m_shape.setFillColor(col);
+        m_isColliding = false;
+    }
+    else
+    {
+        target.draw(m_shape, states);
+    }
+}
+
+void Asteroid::checkCollision(sf::FloatRect otherCollisionBox)
+{
+    sf::FloatRect colBox = getCollisionBox();
+
+    if (colBox.intersects(otherCollisionBox))
+    {
+        handleCollision();
+    }
+}
+
+sf::FloatRect Asteroid::getCollisionBox()
+{
+    sf::FloatRect colBox(m_shape.getPosition().x - m_radius, //position is set to the center of the shape, so we need to subtract the radius;
+                         m_shape.getPosition().y - m_radius,
+                         m_radius * 2,
+                         m_radius * 2);
+    return colBox;
 }
 
 void Asteroid::keepInWindow()
@@ -76,4 +107,10 @@ void Asteroid::createShape(unsigned sides)
         m_shape.setPoint(i, sf::Vector2f(angleDir.x, angleDir.y) * m_radius);
         //std::cout << angleDir.x * m_radius << ", " << angleDir.y * m_radius << "\n";
     }
+}
+
+void Asteroid::handleCollision()
+{
+    m_alive = false;
+    m_isColliding = true;
 }

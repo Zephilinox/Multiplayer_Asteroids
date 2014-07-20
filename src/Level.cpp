@@ -43,7 +43,7 @@ void Level::update(float dt)
 
 void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    for (Asteroid a : m_asteroids)
+    for (Asteroid& a : m_asteroids)
     {
         target.draw(a, states);
     }
@@ -76,6 +76,19 @@ void Level::restartLevel()
     m_levelTitle.setString("Level " + zge::toString(m_level));
     m_levelTitle.setPosition(m_window.getView().getCenter().x - (m_levelTitle.getLocalBounds().width - m_levelTitle.getLocalBounds().left)/2,
                              m_levelTitle.getLocalBounds().height + m_levelTitle.getLocalBounds().top);
+}
+
+void Level::checkCollision(sf::FloatRect otherCollisionBox)
+{
+    for (Asteroid& a : m_asteroids)
+    {
+        a.checkCollision(otherCollisionBox);
+    }
+}
+
+const std::vector<Asteroid> Level::getAsteroids() const
+{
+    return m_asteroids;
 }
 
 void Level::spawnAsteroids()

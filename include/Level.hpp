@@ -29,6 +29,9 @@ public:
 
     void nextLevel();
     void restartLevel();
+    void checkCollision(sf::FloatRect otherCollisionBox); //make collision abstract class?
+
+    const std::vector<Asteroid> getAsteroids() const;
 
 private:
     void spawnAsteroids();
@@ -36,7 +39,7 @@ private:
     sf::RenderWindow& m_window;
     FinishState m_finishState;
     unsigned m_level;
-    std::vector<Asteroid> m_asteroids;
+    mutable std::vector<Asteroid> m_asteroids;
     zge::Resource<sf::Font> m_font;
     sf::Text m_levelTitle;
     sf::Clock m_levelCounter;

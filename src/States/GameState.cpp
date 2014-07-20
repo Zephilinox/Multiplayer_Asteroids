@@ -12,7 +12,7 @@ GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollec
 BaseState(window, stateCollection),
 m_player1(window),
 m_player2(window),
-m_level(window, 1),
+m_level(window, 0),
 m_action(0)
 {
     m_stateID = "GameState";
@@ -47,6 +47,11 @@ void GameState::update(float dt)
     {
         m_level.nextLevel();
     }
+
+    m_level.checkCollision(m_player1.getCollisionBox());
+    m_player1.checkCollision(m_level);
+    m_level.checkCollision(m_player2.getCollisionBox());
+    m_player2.checkCollision(m_level);
 }
 
 void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const

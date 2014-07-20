@@ -19,15 +19,23 @@ public:
     void update(float dt);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+    void checkCollision(sf::FloatRect otherCollisionBox);
+    void isAlive();
+
+    sf::FloatRect getCollisionBox();
+
 private:
     void keepInWindow();
     void createShape(unsigned sides);
+    void handleCollision();
 
-    sf::ConvexShape m_shape;
+    bool m_alive;
+    mutable sf::ConvexShape m_shape;
     zge::Vector m_velocity;
     float m_radius;
     float m_speed;
     float m_rotationSpeed;
+    mutable bool m_isColliding;
 };
 
 #endif //ASTEROID_HPP

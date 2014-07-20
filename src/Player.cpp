@@ -13,7 +13,8 @@ m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2),
-m_shootDelay(sf::seconds(0.5f))
+m_shootDelay(sf::seconds(0.5f)),
+m_isColliding(false)
 {
     m_texture->setSmooth(true);
 
@@ -73,7 +74,19 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_bulletManager, states);
 
-    target.draw(m_sprite, states);
+    if (m_isColliding)
+    {
+        sf::Color oldCol = m_sprite.getColor();
+        m_sprite.setColor(sf::Color::Magenta);
+        target.draw(m_sprite, states);
+        m_sprite.setColor(oldCol);
+        m_isColliding = false;
+    }
+    else
+    {
+        target.draw(m_sprite, states);
+    }
+
     //zge::drawLine(target, m_sprite.getPosition().x, m_sprite.getPosition().y, m_sprite.getPosition().x + m_velocity.x, m_sprite.getPosition().y + m_velocity.y, sf::Color::Red);
 }
 
@@ -105,6 +118,33 @@ void Player::setColor(sf::Color c)
 zge::Vector Player::getPosition()
 {
     return zge::Vector(m_sprite.getPosition().x, m_sprite.getPosition().y);
+}
+
+sf::FloatRect Player::getCollisionBox()
+{
+    sf::FloatRect colBox(m_sprite.getPosition().x,
+                         m_sprite.getPosition().y,
+                         m_texture->getSize().x,
+                         m_texture->getSize().y);
+    return colBox;
+}
+
+void Player::checkCollision(sf::FloatRect otherCollisionBox)
+{
+    sf::FloatRect colBox = getCollisionBox();
+
+    if (colBox.intersects(otherCollisionBox))
+    {
+        handleCollision();
+    }
+}
+
+void Player::checkCollision(const Level& level)
+{
+    for (Asteroid a : level.getAsteroids())
+    {
+        checkCollision(a.getCollisionBox());
+    }
 }
 
 void Player::movement(float dt)
@@ -162,4 +202,9 @@ void Player::keepInWindow()
     {
         m_sprite.setPosition(m_sprite.getPosition().x, 0);
     }
+}
+
+void Player::handleCollision()
+{
+    m_isColliding = true;
 }

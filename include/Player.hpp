@@ -12,6 +12,7 @@
 //SELF
 #include "KeybindingCache.hpp"
 #include "BulletManager.hpp"
+#include "Level.hpp"
 
 class Player : public sf::Drawable
 {
@@ -29,14 +30,19 @@ public:
     void setGravityPosition(zge::Vector pos);
 
     zge::Vector getPosition();
+    sf::FloatRect getCollisionBox();
+
+    void checkCollision(sf::FloatRect otherCollisionBox);
+    void checkCollision(const Level& level);
 
 private:
     void movement(float dt);
     void capVelocity();
     void keepInWindow();
+    void handleCollision();
 
     sf::RenderWindow& m_window;
-    sf::Sprite m_sprite;
+    mutable sf::Sprite m_sprite;
     zge::Resource<sf::Texture> m_texture;
 
     float m_acceleration;
@@ -48,6 +54,8 @@ private:
     BulletManager m_bulletManager;
     sf::Clock m_shootCooldown;
     sf::Time m_shootDelay;
+
+    mutable bool m_isColliding;
 };
 
 #endif //PLAYER_HPP
