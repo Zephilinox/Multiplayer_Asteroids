@@ -109,7 +109,7 @@ void Level::spawnAsteroids()
     for (unsigned i = 0; i < int((m_level+1) * 1.5); ++i)
     {
         //These will need to be modified for the future so that the difficulty is more gradual..
-        Asteroid a(sf::Vector2f(std::rand() % 1280, std::rand() % 720), (std::rand() % 8) + 5, (std::rand() % 900) + 100);
+        Asteroid a(sf::Vector2f(std::rand() % 1280, std::rand() % 720), (std::rand() % 8) + 5, (std::rand() % 400) + 100);
         m_asteroids.push_back(a);
     }
 }

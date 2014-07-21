@@ -14,8 +14,7 @@ m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2),
-m_shootDelay(sf::seconds(0.05f)),
-m_isColliding(false)
+m_shootDelay(sf::seconds(0.15f))
 {
     m_texture->setSmooth(true);
 
@@ -67,7 +66,7 @@ void Player::update(float dt)
         sf::Vector2f gunPos = m_sprite.getPosition();
         gunPos.x += m_velocity.x * dt;
         gunPos.y += m_velocity.y * dt;
-        m_bulletManager.createBullet(gunPos, m_sprite.getRotation(), 800, m_sprite.getColor());
+        m_bulletManager.createBullet(gunPos, m_sprite.getRotation() + (std::rand() % 6 - 3), 800, m_sprite.getColor());
     }
 
     keepInWindow();
@@ -81,20 +80,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_bulletManager, states);
 
-    if (m_isColliding)
-    {
-        sf::Color oldCol = m_sprite.getColor();
-        m_sprite.setColor(sf::Color::Magenta);
-        target.draw(m_sprite, states);
-        m_sprite.setColor(oldCol);
-        m_isColliding = false;
-    }
-    else
-    {
-        target.draw(m_sprite, states);
-    }
-
-    target.draw(m_collisionShape, states);
+    target.draw(m_sprite, states);
 }
 
 void Player::useWASD()
@@ -191,5 +177,5 @@ void Player::keepInWindow()
 
 void Player::handleCollision(sf::CircleShape otherColShape)
 {
-    m_isColliding = true;
+
 }

@@ -4,7 +4,6 @@ Asteroid::Asteroid(sf::Vector2f pos, unsigned sides, float speed):
 Collider(sides),
 m_velocity(1, 1),
 m_speed(speed),
-m_isColliding(false),
 m_isAlive(true)
 {
     if (sides < 5)
@@ -15,6 +14,8 @@ m_isAlive(true)
     m_radius = (sides - 4) * 8;
 
     m_shape.setPosition(pos);
+    m_shape.setOutlineThickness(1.5f);
+    m_shape.setOutlineColor(sf::Color::Black);
 
     createShape(sides);
 
@@ -49,20 +50,7 @@ void Asteroid::update(float dt)
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if (m_isColliding)
-    {
-        sf::Color col = m_shape.getFillColor();
-        m_shape.setFillColor(sf::Color::Magenta);
-        target.draw(m_shape, states);
-        m_shape.setFillColor(col);
-        m_isColliding = false;
-    }
-    else
-    {
-        target.draw(m_shape, states);
-    }
-
-    target.draw(m_collisionShape, states);
+    target.draw(m_shape, states);
 }
 
 void Asteroid::handleCollision(sf::CircleShape otherColShape)
@@ -86,7 +74,8 @@ Asteroid Asteroid::split()
     if (canSplit())
     {
         std::cout << "Splitting Asteroid\n";
-        Asteroid a(m_shape.getPosition(), m_shape.getPointCount() - 2, m_speed);
+        Asteroid a(sf::Vector2f(m_shape.getPosition().x + (std::rand() % 20 - 10), m_shape.getPosition().y + (std::rand() % 20 - 10)),
+                                                           m_shape.getPointCount() - 2, m_speed + (std::rand() % 400 + 100));
         return a;
     }
     else

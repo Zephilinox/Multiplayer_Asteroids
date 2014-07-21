@@ -6,7 +6,6 @@ m_texture("textures/bullet.png"),
 m_speed(speed),
 m_velocity(1, 1),
 m_warpCount(0),
-m_isColliding(false),
 m_isAlive(true),
 m_score(0)
 {
@@ -41,20 +40,7 @@ void Bullet::update(float dt)
 
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if (m_isColliding)
-    {
-        sf::Color col = m_sprite.getColor();
-        m_sprite.setColor(sf::Color::Magenta);
-        target.draw(m_sprite, states);
-        m_sprite.setColor(col);
-        m_isColliding = false;
-    }
-    else
-    {
-        target.draw(m_sprite, states);
-    }
-
-    target.draw(m_collisionShape, states);
+    target.draw(m_sprite, states);
 }
 
 void Bullet::handleCollision(sf::CircleShape otherColShape)
