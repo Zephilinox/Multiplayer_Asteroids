@@ -24,6 +24,8 @@ public:
 
     sf::Color getColor();
     unsigned getWarpCount();
+    float getScore();
+
     bool isAlive();
 
 private:
@@ -39,6 +41,8 @@ private:
 
     mutable bool m_isColliding;
     bool m_isAlive;
+
+    float m_score;
 };
 
 #endif //BULLET_HPP

@@ -21,9 +21,12 @@ public:
     void createBullet(sf::Vector2f pos, float rotation, float speed, sf::Color col);
 
     std::vector<Bullet>& getBullets();
+    float getScore();
 
 private:
     std::vector<Bullet> m_bullets;
+
+    float m_score;
 };
 
 #endif //BULLETMANAGER_HPP

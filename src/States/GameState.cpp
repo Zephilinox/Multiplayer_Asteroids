@@ -4,6 +4,7 @@
 #include <iostream>
 
 //3RD
+#include <ZGE/Utility.hpp>
 
 //SELF
 #include "States/PauseState.hpp"
@@ -12,6 +13,8 @@ GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollec
 BaseState(window, stateCollection),
 m_player1(window),
 m_player2(window),
+m_player1Score("", "fonts/arial.ttf", 24, sf::Vector2f(0, 0), Origin::TopLeft),
+m_player2Score("", "fonts/arial.ttf", 24, sf::Vector2f(1280, 0), Origin::TopRight),
 m_level(window, 0),
 m_action(0)
 {
@@ -29,6 +32,10 @@ void GameState::handleEvent(const sf::Event& event)
 {
     m_player1.handleEvent(event);
     m_player2.handleEvent(event);
+
+    m_player1Score.handleEvent(event);
+    m_player2Score.handleEvent(event);
+
     m_level.handleEvent(event);
 }
 
@@ -36,6 +43,7 @@ void GameState::update(float dt)
 {
     m_player1.update(dt);
     m_player2.update(dt);
+
     m_level.update(dt);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
@@ -72,6 +80,12 @@ void GameState::update(float dt)
         //a.checkCollision(m_player2.getCollisionShape());
         m_player2.checkCollision(a.getCollisionShape());
     }
+
+    m_player1Score.setText(zge::toString(m_player1.getBulletManager().getScore()));
+    m_player1Score.update(dt);
+
+    m_player2Score.setText(zge::toString(m_player2.getBulletManager().getScore()));
+    m_player2Score.update(dt);
 }
 
 void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -79,6 +93,8 @@ void GameState::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(m_player1, states);
     target.draw(m_player2, states);
     target.draw(m_level, states);
+    target.draw(m_player1Score, states);
+    target.draw(m_player2Score, states);
 }
 
 void GameState::postDraw()

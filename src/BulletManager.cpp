@@ -1,6 +1,7 @@
 #include "BulletManager.hpp"
 
-BulletManager::BulletManager()
+BulletManager::BulletManager():
+m_score(0)
 {
 
 }
@@ -21,8 +22,14 @@ void BulletManager::update(float dt)
     }
 
     m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(),
-                                   [](Bullet& b)
+                                   [this](Bullet& b)
                                     {
+                                        if (!b.isAlive())
+                                        {
+                                            std::cout << b.getScore() << "\n";
+                                            m_score += b.getScore();
+                                        }
+
                                         return (b.getWarpCount() > 1) || !b.isAlive();
                                     }
                                    ), m_bullets.end());
@@ -45,4 +52,9 @@ std::vector<Bullet>& BulletManager::getBullets()
 void BulletManager::createBullet(sf::Vector2f pos, float rotation, float speed, sf::Color col)
 {
     m_bullets.push_back(Bullet(pos, rotation, speed, col));
+}
+
+float BulletManager::getScore()
+{
+    return m_score;
 }

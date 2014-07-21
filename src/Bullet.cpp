@@ -7,7 +7,8 @@ m_speed(speed),
 m_velocity(1, 1),
 m_warpCount(0),
 m_isColliding(false),
-m_isAlive(true)
+m_isAlive(true),
+m_score(0)
 {
     m_sprite.setTexture(m_texture);
     m_sprite.setOrigin(m_texture->getSize().x / 2,
@@ -58,6 +59,7 @@ void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Bullet::handleCollision(sf::CircleShape otherColShape)
 {
+    m_score += otherColShape.getRadius();
     m_isColliding = true;
     m_isAlive = false;
 }
@@ -70,6 +72,11 @@ sf::Color Bullet::getColor()
 unsigned Bullet::getWarpCount()
 {
     return m_warpCount;
+}
+
+float Bullet::getScore()
+{
+    return m_score;
 }
 
 bool Bullet::isAlive()
