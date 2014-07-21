@@ -24,6 +24,7 @@ public:
 
     sf::Color getColor();
     unsigned getWarpCount();
+    bool isAlive();
 
 private:
     void keepInWindow();

@@ -14,7 +14,7 @@ m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2),
-m_shootDelay(sf::seconds(0.5f)),
+m_shootDelay(sf::seconds(0.05f)),
 m_isColliding(false)
 {
     m_texture->setSmooth(true);
@@ -67,7 +67,7 @@ void Player::update(float dt)
         sf::Vector2f gunPos = m_sprite.getPosition();
         gunPos.x += m_velocity.x * dt;
         gunPos.y += m_velocity.y * dt;
-        m_bulletManager.createBullet(gunPos, m_sprite.getRotation(), 100, m_sprite.getColor());
+        m_bulletManager.createBullet(gunPos, m_sprite.getRotation(), 800, m_sprite.getColor());
     }
 
     keepInWindow();
@@ -125,6 +125,11 @@ void Player::setColor(sf::Color c)
 zge::Vector Player::getPosition()
 {
     return zge::Vector(m_sprite.getPosition().x, m_sprite.getPosition().y);
+}
+
+BulletManager& Player::getBulletManager()
+{
+    return m_bulletManager;
 }
 
 void Player::movement(float dt)

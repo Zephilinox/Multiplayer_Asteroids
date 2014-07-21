@@ -46,6 +46,7 @@ void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
         m_sprite.setColor(sf::Color::Magenta);
         target.draw(m_sprite, states);
         m_sprite.setColor(col);
+        m_isColliding = false;
     }
     else
     {
@@ -58,6 +59,7 @@ void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Bullet::handleCollision(sf::CircleShape otherColShape)
 {
     m_isColliding = true;
+    m_isAlive = false;
 }
 
 sf::Color Bullet::getColor()
@@ -68,6 +70,11 @@ sf::Color Bullet::getColor()
 unsigned Bullet::getWarpCount()
 {
     return m_warpCount;
+}
+
+bool Bullet::isAlive()
+{
+    return m_isAlive;
 }
 
 void Bullet::keepInWindow()

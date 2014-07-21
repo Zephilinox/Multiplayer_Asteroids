@@ -23,7 +23,7 @@ void BulletManager::update(float dt)
     m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(),
                                    [](Bullet& b)
                                     {
-                                        return b.getWarpCount() > 1;
+                                        return (b.getWarpCount() > 1) || !b.isAlive();
                                     }
                                    ), m_bullets.end());
 }
@@ -35,6 +35,11 @@ void BulletManager::draw(sf::RenderTarget& target, sf::RenderStates states) cons
     {
         target.draw(m_bullets[i], states);
     }
+}
+
+std::vector<Bullet>& BulletManager::getBullets()
+{
+    return m_bullets;
 }
 
 void BulletManager::createBullet(sf::Vector2f pos, float rotation, float speed, sf::Color col)

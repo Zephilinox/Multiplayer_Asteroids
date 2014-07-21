@@ -52,10 +52,24 @@ void GameState::update(float dt)
     {
         Asteroid& a = m_level.getAsteroids()[i];
 
-        a.checkCollision(m_player1.getCollisionShape());
+        for (unsigned i = 0; i < m_player1.getBulletManager().getBullets().size(); ++i)
+        {
+            Bullet& b = m_player1.getBulletManager().getBullets()[i];
+            b.checkCollision(a.getCollisionShape());
+            a.checkCollision(b.getCollisionShape());
+        }
+
+        for (unsigned i = 0; i < m_player2.getBulletManager().getBullets().size(); ++i)
+        {
+            Bullet& b = m_player2.getBulletManager().getBullets()[i];
+            b.checkCollision(a.getCollisionShape());
+            a.checkCollision(b.getCollisionShape());
+        }
+
+        //a.checkCollision(m_player1.getCollisionShape());
         m_player1.checkCollision(a.getCollisionShape());
 
-        a.checkCollision(m_player2.getCollisionShape());
+        //a.checkCollision(m_player2.getCollisionShape());
         m_player2.checkCollision(a.getCollisionShape());
     }
 }

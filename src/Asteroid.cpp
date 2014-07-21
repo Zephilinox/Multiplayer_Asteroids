@@ -4,7 +4,8 @@ Asteroid::Asteroid(sf::Vector2f pos, unsigned sides, float speed):
 Collider(sides),
 m_velocity(1, 1),
 m_speed(speed),
-m_isColliding(false)
+m_isColliding(false),
+m_isAlive(true)
 {
     if (sides < 5)
     {
@@ -21,7 +22,7 @@ m_isColliding(false)
     m_velocity *= zge::Vector::degToVector(angle);
     m_velocity *= m_speed;
     m_velocity /= sides;
-    std::cout << m_velocity.x << ", " << m_velocity.y << "\n";
+    //std::cout << m_velocity.x << ", " << m_velocity.y << "\n";
     //std::cout << "ang = " << angle << "\n";
 
     m_rotationSpeed = (std::rand() % int((speed*2)/sides)) - speed/sides;
@@ -64,6 +65,38 @@ void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(m_collisionShape, states);
 }
 
+void Asteroid::handleCollision(sf::CircleShape otherColShape)
+{
+    m_isAlive = false;
+    m_isColliding = true;
+}
+
+bool Asteroid::isAlive()
+{
+    return m_isAlive;
+}
+
+bool Asteroid::canSplit()
+{
+    return (m_shape.getPointCount() - 2 >= 5);
+}
+
+Asteroid Asteroid::split()
+{
+    if (canSplit())
+    {
+        std::cout << "Splitting Asteroid\n";
+        Asteroid a(m_shape.getPosition(), m_shape.getPointCount() - 2, m_speed);
+        return a;
+    }
+    else
+    {
+        std::cout << "This should not happen\n";
+        Asteroid a(m_shape.getPosition(), 5, m_speed);
+        return a;
+    }
+}
+
 void Asteroid::keepInWindow()
 {
     if (m_shape.getPosition().x + m_radius <= 0)
@@ -99,8 +132,3 @@ void Asteroid::createShape(unsigned sides)
     }
 }
 
-void Asteroid::handleCollision(sf::CircleShape otherColShape)
-{
-    m_alive = false;
-    m_isColliding = true;
-}

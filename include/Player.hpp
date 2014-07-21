@@ -31,6 +31,7 @@ public:
     void setGravityPosition(zge::Vector pos);
 
     zge::Vector getPosition();
+    BulletManager& getBulletManager();
 
     void handleCollision(sf::CircleShape otherColShape) override;
 

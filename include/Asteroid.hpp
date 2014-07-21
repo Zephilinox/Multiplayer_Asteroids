@@ -21,19 +21,22 @@ public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void handleCollision(sf::CircleShape otherColShape) override;
-    void isAlive();
+    bool isAlive();
+
+    bool canSplit();
+    Asteroid split();
 
 private:
     void keepInWindow();
     void createShape(unsigned sides);
 
-    bool m_alive;
     mutable sf::ConvexShape m_shape;
     zge::Vector m_velocity;
     float m_radius;
     float m_speed;
     float m_rotationSpeed;
     mutable bool m_isColliding;
+    bool m_isAlive;
 };
 
 #endif //ASTEROID_HPP

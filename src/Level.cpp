@@ -35,7 +35,28 @@ void Level::update(float dt)
         a.update(dt);
     }
 
-    if (m_levelCounter.getElapsedTime().asSeconds() >= 5.f)
+    for (unsigned i = 0; i < m_asteroids.size(); ++i)
+    {
+        if (!m_asteroids[i].isAlive() && m_asteroids[i].canSplit())
+        {
+            m_asteroids.push_back(m_asteroids[i].split());
+            m_asteroids.push_back(m_asteroids[i].split());
+            m_asteroids.push_back(m_asteroids[i].split());
+            /*Asteroid a1(sf::Vector2f(500, 500), 6, 400);
+            Asteroid a2(sf::Vector2f(500, 500), 6, 400);
+            m_asteroids.push_back(a1);
+            m_asteroids.push_back(a2);*/
+        }
+    }
+
+    m_asteroids.erase(std::remove_if(m_asteroids.begin(), m_asteroids.end(),
+                                   [](Asteroid& a)
+                                    {
+                                        return !a.isAlive();
+                                    }
+                                   ), m_asteroids.end());
+
+    if (m_asteroids.size() == 0)
     {
         m_finishState = FinishState::Finished;
     }
@@ -85,10 +106,10 @@ std::vector<Asteroid>& Level::getAsteroids() const
 
 void Level::spawnAsteroids()
 {
-    for (unsigned i = 0; i < (m_level+1) * 3; ++i)
+    for (unsigned i = 0; i < int((m_level+1) * 1.5); ++i)
     {
         //These will need to be modified for the future so that the difficulty is more gradual..
-        Asteroid a(sf::Vector2f(std::rand() % 1280, std::rand() % 720), (std::rand() % 8) + 5, (std::rand() % 1300) + 200);
+        Asteroid a(sf::Vector2f(std::rand() % 1280, std::rand() % 720), (std::rand() % 8) + 5, (std::rand() % 900) + 100);
         m_asteroids.push_back(a);
     }
 }
