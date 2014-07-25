@@ -86,6 +86,7 @@
 		<Unit filename="include/Level.hpp" />
 		<Unit filename="include/Menu.hpp" />
 		<Unit filename="include/Player.hpp" />
+		<Unit filename="include/States/GameOverState.hpp" />
 		<Unit filename="include/States/GameState.hpp" />
 		<Unit filename="include/States/MenuState.hpp" />
 		<Unit filename="include/States/PauseState.hpp" />
@@ -101,6 +102,7 @@
 		<Unit filename="src/Level.cpp" />
 		<Unit filename="src/Menu.cpp" />
 		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/States/GameOverState.cpp" />
 		<Unit filename="src/States/GameState.cpp" />
 		<Unit filename="src/States/MenuState.cpp" />
 		<Unit filename="src/States/PauseState.cpp" />
