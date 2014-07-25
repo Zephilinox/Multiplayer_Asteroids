@@ -37,6 +37,11 @@ void TextHandler::setColor(sf::Color col)
     m_text.setColor(col);
 }
 
+sf::Color TextHandler::getColor()
+{
+    return m_text.getColor();
+}
+
 void TextHandler::updatePosition()
 {
     switch(m_origin)
@@ -55,10 +60,18 @@ void TextHandler::updatePosition()
             break;
         }
 
+        case Origin::TopCentre:
+        {
+            m_text.setPosition(m_position.x - ((m_text.getLocalBounds().width + m_text.getLocalBounds().left)/2),
+                               m_position.y);
+            break;
+        }
+
+        case Origin::MiddleCentre:
         default:
         {
-            m_text.setPosition(m_position.x + ((m_text.getLocalBounds().width + m_text.getLocalBounds().left)/2),
-                               m_position.y + ((m_text.getLocalBounds().height + m_text.getLocalBounds().top))/2);
+            m_text.setPosition(m_position.x - ((m_text.getLocalBounds().width + m_text.getLocalBounds().left)/2),
+                               m_position.y - ((m_text.getLocalBounds().height + m_text.getLocalBounds().top))/2);
             break;
         }
     }

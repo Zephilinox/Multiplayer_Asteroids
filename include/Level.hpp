@@ -31,6 +31,7 @@ public:
     void restartLevel();
 
     std::vector<Asteroid>& getAsteroids() const;
+    unsigned getLevel();
 
 private:
     void spawnAsteroids();

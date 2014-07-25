@@ -104,12 +104,17 @@ std::vector<Asteroid>& Level::getAsteroids() const
     return m_asteroids;
 }
 
+unsigned Level::getLevel()
+{
+    return m_level;
+}
+
 void Level::spawnAsteroids()
 {
     for (unsigned i = 0; i < int((m_level+1) * 1.5); ++i)
     {
         //These will need to be modified for the future so that the difficulty is more gradual..
-        Asteroid a(sf::Vector2f(std::rand() % 1280, std::rand() % 720), (std::rand() % 8) + 5, (std::rand() % 400) + 100);
+        Asteroid a(sf::Vector2f(std::rand() % 1280, std::rand() % 720), (std::rand() % 8) + 5, (std::rand() % 200) + 50);
         m_asteroids.push_back(a);
     }
 }

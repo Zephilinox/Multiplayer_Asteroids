@@ -75,7 +75,8 @@ Asteroid Asteroid::split()
     {
         std::cout << "Splitting Asteroid\n";
         Asteroid a(sf::Vector2f(m_shape.getPosition().x + (std::rand() % 20 - 10), m_shape.getPosition().y + (std::rand() % 20 - 10)),
-                                                           m_shape.getPointCount() - 2, m_speed + (std::rand() % 400 + 100));
+                                                            m_shape.getPointCount() - 2,
+                                                            m_speed + (std::rand() % 200 + 50));
         return a;
     }
     else

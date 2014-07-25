@@ -10,6 +10,7 @@
 #include <ZGE/ResourceManagement/Resource.hpp>
 
 //SELF
+#include "TextHandler.hpp"
 
 class SplashState : public zge::BaseState
 {
@@ -26,7 +27,7 @@ private:
 
     sf::Clock m_timeSpentInState;
 
-    sf::Text m_gameTitle;
+    TextHandler m_gameTitle;
     zge::Resource<sf::Font> m_font;
     zge::Resource<sf::Texture> m_logoTexture;
     sf::Sprite m_logoSprite;

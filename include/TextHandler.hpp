@@ -22,6 +22,8 @@ public:
     void setText(std::string str);
     void setColor(sf::Color col);
 
+    sf::Color getColor();
+
 private:
     void updatePosition();
 

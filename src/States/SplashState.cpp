@@ -9,17 +9,18 @@
 
 SplashState::SplashState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
+m_gameTitle("Multiplayer Asteroids!", "fonts/arial.ttf", 48, sf::Vector2f(m_window.getView().getCenter().x, m_window.getView().getCenter().y / 2.5), Origin::MiddleCentre),
 m_font("fonts/arial.ttf"),
 m_logoTexture("textures/ZX-128.png")
 {
     m_stateID = "SplashState";
 
-    m_gameTitle.setFont(m_font);
+    /*m_gameTitle.setFont(m_font);
     //m_gameTitle.setColor(sf::Color(255, 255, 255, 0));
     m_gameTitle.setCharacterSize(36);
     m_gameTitle.setString("Multiplayer Asteroids!");
     m_gameTitle.setPosition((window.getSize().x / 2) - ((m_gameTitle.getLocalBounds().width + m_gameTitle.getLocalBounds().left) / 2),
-                            m_gameTitle.getLocalBounds().height + m_gameTitle.getLocalBounds().top + (window.getSize().y / 5));
+                            m_gameTitle.getLocalBounds().height + m_gameTitle.getLocalBounds().top + (window.getSize().y / 5));*/
 
     m_logoSprite.setTexture(m_logoTexture);
     m_logoSprite.setColor(sf::Color(255, 255, 255, 0));
@@ -29,11 +30,13 @@ m_logoTexture("textures/ZX-128.png")
 
 void SplashState::handleEvent(const sf::Event& event)
 {
-
+    m_gameTitle.handleEvent(event);
 }
 
 void SplashState::update(float dt)
 {
+    m_gameTitle.update(dt);
+
     if (m_timeSpentInState.getElapsedTime().asSeconds() <= 0.5f)
     {
 

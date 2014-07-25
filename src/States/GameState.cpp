@@ -8,6 +8,7 @@
 
 //SELF
 #include "States/PauseState.hpp"
+#include "States/GameOverState.hpp"
 
 GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
@@ -15,11 +16,10 @@ m_player1(window),
 m_player2(window),
 m_player1Score("", "fonts/arial.ttf", 24, sf::Vector2f(0, 0), Origin::TopLeft),
 m_player2Score("", "fonts/arial.ttf", 24, sf::Vector2f(1280, 0), Origin::TopRight),
-m_level(window, 0),
+m_level(window, 1),
 m_action(0)
 {
     m_stateID = "GameState";
-    std::cout << "[GameState] Constructor\n";
 
     m_player1.setColor(sf::Color(255, 180, 0));
     m_player2.setColor(sf::Color(50, 200, 50));
@@ -48,12 +48,17 @@ void GameState::update(float dt)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
-        m_action = 1;
+        m_action = 1; //Pause
     }
 
     if (m_level.getFinishState() == FinishState::Finished)
     {
         m_level.nextLevel();
+    }
+
+    if (m_level.getLevel() >= 10)
+    {
+        m_action = 2; //Game Over
     }
 
     for (unsigned i = 0; i < m_level.getAsteroids().size(); ++i)
@@ -103,6 +108,10 @@ void GameState::postDraw()
     {
         m_stateCollection.push<PauseState>(m_window);
         m_action = 0;
-        std::cout << "PauseState Pushed\n";
+    }
+    else if (m_action == 2)
+    {
+        m_stateCollection.push<GameOverState>(m_window);
+        m_action = 0;
     }
 }
