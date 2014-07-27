@@ -26,7 +26,9 @@ private:
     Player m_player1;
     Player m_player2;
     TextHandler m_player1Score;
+    TextHandler m_player1Lives;
     TextHandler m_player2Score;
+    TextHandler m_player2Lives;
 
     Level m_level;
 

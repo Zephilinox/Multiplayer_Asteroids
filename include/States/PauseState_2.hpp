@@ -12,8 +12,6 @@
 #include "Menu.hpp"
 #include "TextHandler.hpp"
 
-enum Winner {None, Player1, Player2};
-
 class GameOverState : public zge::BaseState
 {
 public:
@@ -23,13 +21,10 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void postDraw() override;
 
-    void setWinner(Winner);
-
 private:
     Menu m_menu;
     TextHandler m_titleText;
     unsigned m_action;
-    Winner m_winner;
 };
 
 #endif //GAMEOVERSTATE_HPP

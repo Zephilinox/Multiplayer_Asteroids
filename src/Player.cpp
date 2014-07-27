@@ -14,7 +14,8 @@ m_window(window),
 m_texture("textures/ship.png"),
 m_acceleration(200),
 m_maxVelocityLength(m_acceleration * 2),
-m_shootDelay(sf::seconds(0.15f))
+m_shootDelay(sf::seconds(0.15f)),
+m_lives(8)
 {
     m_texture->setSmooth(true);
 
@@ -118,6 +119,11 @@ BulletManager& Player::getBulletManager()
     return m_bulletManager;
 }
 
+unsigned Player::getLives()
+{
+    return m_lives;
+}
+
 void Player::movement(float dt)
 {
     double shipRadian = zge::Vector::degToRad(m_sprite.getRotation());
@@ -177,5 +183,9 @@ void Player::keepInWindow()
 
 void Player::handleCollision(sf::CircleShape otherColShape)
 {
-
+    if (m_lives > 0)
+    {
+        m_lives--;
+        std::cout << m_lives << "\n";
+    }
 }

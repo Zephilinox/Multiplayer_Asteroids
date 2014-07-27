@@ -32,6 +32,7 @@ public:
 
     zge::Vector getPosition();
     BulletManager& getBulletManager();
+    unsigned getLives();
 
     void handleCollision(sf::CircleShape otherColShape) override;
 
@@ -55,6 +56,8 @@ private:
     sf::Time m_shootDelay;
 
     mutable bool m_isColliding;
+
+    unsigned m_lives;
 };
 
 #endif //PLAYER_HPP

@@ -13,25 +13,6 @@
 int main()
 {
     std::srand(std::time(nullptr));
-    /**
-        Player 1 has to destroy the asteroids without getting hit more than x times per level.
-        This is done by shooting them, which increases your score.
-
-        Player 2 has to stop player 1 from destroying the asteroids.
-        This is done by shooting Player 1's bullets.
-        This is made easier by the fact that Player 2's bullets are twice as fast as well as warping around the screen one extra time.
-
-        Player 2 can also shoot a tractor beam and a repulsion beam at an asteroid or player in order to pull it towards him. Higher mass = slower pull/push.
-        Player 2's velocity will factor in to the speed at which the tractor beam functions, depending on the direction.
-        By using the tractor beam, Player 2 can either force Player 1 in to a collision with an asteroid
-        or force an asteroid in to a collision with Player 1
-
-        If Player 1 dies, Player 2 swaps with Player 1. The level remains the same.
-
-        Once both players have swapped (so one chance per role) and then die, the game will end.
-
-        The player who scored the most while acting as Player 1 wins.
-    **/
 
     sf::RenderWindow window(sf::VideoMode(1280, 720, 32), "Multiplayer Asteroids");
     //window.setFramerateLimit(60);
