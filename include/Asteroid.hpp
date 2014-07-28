@@ -6,11 +6,11 @@
 //3RD
 #include <SFML/Graphics.hpp>
 #include <ZGE/Vector.hpp>
+#include <ZGE/Collider.hpp>
 
 //SELF
-#include "Collider.hpp"
 
-class Asteroid : public sf::Drawable, public Collider
+class Asteroid : public sf::Drawable, public zge::Collider
 {
 
 public:

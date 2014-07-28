@@ -5,13 +5,13 @@
 
 //3RD
 #include <SFML/Graphics.hpp>
+#include <ZGE/TextHandler.hpp>
+#include <ZGE/State/BaseState.hpp>
+#include <ZGE/State/StateCollection.hpp>
 
 //SELF
-#include "ZGE/State/BaseState.hpp"
-#include "ZGE/State/StateCollection.hpp"
 #include "Player.hpp"
 #include "Level.hpp"
-#include "TextHandler.hpp"
 
 class GameState : public zge::BaseState
 {
@@ -25,10 +25,10 @@ public:
 private:
     Player m_player1;
     Player m_player2;
-    TextHandler m_player1Score;
-    TextHandler m_player1Lives;
-    TextHandler m_player2Score;
-    TextHandler m_player2Lives;
+    zge::TextHandler m_player1Score;
+    zge::TextHandler m_player1Lives;
+    zge::TextHandler m_player2Score;
+    zge::TextHandler m_player2Lives;
 
     Level m_level;
 

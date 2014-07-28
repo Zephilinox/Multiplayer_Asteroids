@@ -7,10 +7,10 @@
 #include <SFML/Graphics.hpp>
 #include <ZGE/State/BaseState.hpp>
 #include <ZGE/State/StateCollection.hpp>
+#include <ZGE/GUI/Menu.hpp>
+#include <ZGE/TextHandler.hpp>
 
 //SELF
-#include "Menu.hpp"
-#include "TextHandler.hpp"
 
 enum Winner {None, Player1, Player2};
 
@@ -26,8 +26,8 @@ public:
     void setWinner(Winner);
 
 private:
-    Menu m_menu;
-    TextHandler m_titleText;
+    zge::Menu m_menu;
+    zge::TextHandler m_titleText;
     unsigned m_action;
     Winner m_winner;
 };

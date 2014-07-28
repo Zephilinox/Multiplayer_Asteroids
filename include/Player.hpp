@@ -8,14 +8,14 @@
 #include <SFML/Graphics.hpp>
 #include <ZGE/ResourceManagement/Resource.hpp>
 #include <ZGE/Vector.hpp>
+#include <ZGE/KeybindingCache.hpp>
+#include <ZGE/Collider.hpp>
 
 //SELF
-#include "KeybindingCache.hpp"
 #include "BulletManager.hpp"
 #include "Level.hpp"
-#include "Collider.hpp"
 
-class Player : public sf::Drawable, public Collider
+class Player : public sf::Drawable, public zge::Collider
 {
 public:
     Player(sf::RenderWindow& window);

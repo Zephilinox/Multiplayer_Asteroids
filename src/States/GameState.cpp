@@ -14,10 +14,10 @@ GameState::GameState(sf::RenderWindow& window, zge::StateCollection& stateCollec
 BaseState(window, stateCollection),
 m_player1(window),
 m_player2(window),
-m_player1Score("", "fonts/arial.ttf", 24, sf::Vector2f(0, 0), Origin::TopLeft),
-m_player1Lives("", "fonts/arial.ttf", 24, sf::Vector2f(0, m_window.getSize().y), Origin::BottomLeft),
-m_player2Score("", "fonts/arial.ttf", 24, sf::Vector2f(m_window.getSize().x, 0), Origin::TopRight),
-m_player2Lives("", "fonts/arial.ttf", 24, sf::Vector2f(m_window.getSize().x, m_window.getSize().y), Origin::BottomRight),
+m_player1Score("", "fonts/arial.ttf", 24, sf::Vector2f(0, 0), zge::Origin::TopLeft),
+m_player1Lives("", "fonts/arial.ttf", 24, sf::Vector2f(0, m_window.getSize().y), zge::Origin::BottomLeft),
+m_player2Score("", "fonts/arial.ttf", 24, sf::Vector2f(m_window.getSize().x, 0), zge::Origin::TopRight),
+m_player2Lives("", "fonts/arial.ttf", 24, sf::Vector2f(m_window.getSize().x, m_window.getSize().y), zge::Origin::BottomRight),
 m_level(window, 1),
 m_action(0)
 {

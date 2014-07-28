@@ -9,7 +9,7 @@
 
 SplashState::SplashState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
-m_gameTitle("Multiplayer Asteroids!", "fonts/arial.ttf", 48, sf::Vector2f(m_window.getView().getCenter().x, m_window.getView().getCenter().y / 2.5), Origin::MiddleCentre),
+m_gameTitle("Multiplayer Asteroids!", "fonts/arial.ttf", 48, sf::Vector2f(m_window.getView().getCenter().x, m_window.getView().getCenter().y / 2.5), zge::Origin::MiddleCentre),
 m_font("fonts/arial.ttf"),
 m_logoTexture("textures/ZX-128.png")
 {

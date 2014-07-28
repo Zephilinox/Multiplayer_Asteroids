@@ -7,9 +7,9 @@
 #include <SFML/Graphics.hpp>
 #include <ZGE/State/BaseState.hpp>
 #include <ZGE/State/StateCollection.hpp>
+#include <ZGE/GUI/Menu.hpp>
 
 //SELF
-#include "Menu.hpp"
 
 class PauseState : public zge::BaseState
 {
@@ -21,7 +21,7 @@ public:
     void postDraw() override;
 
 private:
-    Menu m_menu;
+    zge::Menu m_menu;
 
     unsigned m_action;
 };

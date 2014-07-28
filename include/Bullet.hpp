@@ -7,11 +7,11 @@
 #include <SFML/Graphics.hpp>
 #include <ZGE/Vector.hpp>
 #include <ZGE/ResourceManagement/Resource.hpp>
+#include <ZGE/Collider.hpp>
 
 //SELF
-#include "Collider.hpp"
 
-class Bullet : public sf::Drawable, public Collider
+class Bullet : public sf::Drawable, public zge::Collider
 {
 public:
     Bullet(sf::Vector2f pos, float rotation, float speed, sf::Color col);

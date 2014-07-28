@@ -10,7 +10,7 @@
 GameOverState::GameOverState(sf::RenderWindow& window, zge::StateCollection& stateCollection):
 BaseState(window, stateCollection),
 m_menu(window),
-m_titleText("", "fonts/arial.ttf", 32, sf::Vector2f(m_window.getView().getCenter().x, 64), Origin::TopCentre),
+m_titleText("", "fonts/arial.ttf", 32, sf::Vector2f(m_window.getView().getCenter().x, 64), zge::Origin::TopCentre),
 m_action(0),
 m_winner(Winner::None)
 {
