@@ -130,16 +130,16 @@ void GameState::postDraw()
         if (m_player1.getLives() == 0 ||
             m_player2.getBulletManager().getScore() > m_player1.getBulletManager().getScore())
         {
-            dynamic_cast<GameOverState*>(&m_stateCollection.getTop())->setWinner(Winner::Player2);
+            dynamic_cast<GameOverState*>(&m_stateCollection.getFromTop(0))->setWinner(Winner::Player2);
         }
         else if (m_player2.getLives() == 0 ||
                  m_player1.getBulletManager().getScore() > m_player2.getBulletManager().getScore())
         {
-            dynamic_cast<GameOverState*>(&m_stateCollection.getTop())->setWinner(Winner::Player1);
+            dynamic_cast<GameOverState*>(&m_stateCollection.getFromTop(0))->setWinner(Winner::Player1);
         }
         else
         {
-            dynamic_cast<GameOverState*>(&m_stateCollection.getTop())->setWinner(Winner::None);
+            dynamic_cast<GameOverState*>(&m_stateCollection.getFromTop(0))->setWinner(Winner::None);
         }
 
         m_action = 0;

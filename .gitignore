@@ -23,7 +23,5 @@
 bin/*
 obj/*
 gmon.out
-*.depend  
+*.depend
 *.layout
-Multiplayer_Asteroids.depend
-Multiplayer_Asteroids.layout

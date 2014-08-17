@@ -5,6 +5,7 @@ BaseState(window, stateCollection),
 m_menu(window),
 m_action(0)
 {
+    transparent = true;
     m_stateID = "PauseState";
 
     m_menu.addButton("/textures/button.png", "Resume Game");
@@ -37,6 +38,9 @@ void PauseState::update(float dt)
 
 void PauseState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    sf::RectangleShape rs(m_window.getView().getSize());
+    rs.setFillColor(sf::Color(20, 20, 20, 200));
+    target.draw(rs, states);
     target.draw(m_menu, states);
 }
 
