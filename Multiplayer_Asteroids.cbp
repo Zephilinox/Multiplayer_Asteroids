@@ -50,6 +50,8 @@
 			<Add directory="Z:/Programming/C++/SFML-2.1/include" />
 			<Add directory="Z:/Programming/GithubRepositories/ZGE/include" />
 			<Add directory="Z:/Programming/GithubRepositories/ZGE/src" />
+			<Add directory="Z:/Programming/C++/Lua-5.2.3/include" />
+			<Add directory="Z:/Programming/C++/LuaBridge/Source" />
 			<Add directory="include" />
 			<Add directory="src" />
 		</Compiler>
@@ -57,6 +59,7 @@
 			<Add option="-static-libstdc++" />
 			<Add option="-static-libgcc" />
 			<Add option="-static" />
+			<Add library="Z:\Programming\C++\MinGW-Latest\lib\liblua.a" />
 			<Add directory="Z:/Programming/C++/SFML-2.1/lib" />
 		</Linker>
 		<Unit filename="../ZGE/include/ZGE/Collider.hpp" />
