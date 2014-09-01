@@ -34,7 +34,7 @@ public:
     unsigned getLevel();
 
 private:
-    void spawnAsteroids(sf::RenderWindow& window);
+    void spawnAsteroids();
 
     sf::RenderWindow& m_window;
     FinishState m_finishState;
