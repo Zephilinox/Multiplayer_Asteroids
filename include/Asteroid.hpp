@@ -17,7 +17,7 @@ public:
     Asteroid(sf::Vector2f pos, unsigned sides, float speed);
 
     void handleEvent(const sf::Event& event);
-    void update(float dt);
+    void update(float dt, sf::RenderWindow& window);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void handleCollision(sf::CircleShape otherColShape) override;
@@ -27,7 +27,7 @@ public:
     Asteroid split();
 
 private:
-    void keepInWindow();
+    void keepInWindow(sf::RenderWindow& window);
     void createShape(unsigned sides);
 
     mutable sf::ConvexShape m_shape;

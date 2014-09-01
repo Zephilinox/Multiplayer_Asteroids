@@ -36,7 +36,7 @@ void Player::handleEvent(const sf::Event& event)
 
 void Player::update(float dt)
 {
-    m_bulletManager.update(dt);
+    m_bulletManager.update(dt, m_window);
 
     movement(dt);
 
@@ -165,17 +165,17 @@ void Player::keepInWindow()
 {
     if (m_sprite.getPosition().x + (m_texture->getSize().x / 2) <= 0)
     {
-        m_sprite.setPosition(1280, m_sprite.getPosition().y);
+        m_sprite.setPosition(m_window.getView().getSize().x, m_sprite.getPosition().y);
     }
-    else if (m_sprite.getPosition().x - (m_texture->getSize().x / 2) >= 1280)
+    else if (m_sprite.getPosition().x - (m_texture->getSize().x / 2) >= m_window.getView().getSize().x)
     {
         m_sprite.setPosition(0, m_sprite.getPosition().y);
     }
     else if (m_sprite.getPosition().y + (m_texture->getSize().y / 2 ) <= 0)
     {
-        m_sprite.setPosition(m_sprite.getPosition().x, 720);
+        m_sprite.setPosition(m_sprite.getPosition().x, m_window.getView().getSize().y);
     }
-    else if (m_sprite.getPosition().y - (m_texture->getSize().y / 2) >= 720)
+    else if (m_sprite.getPosition().y - (m_texture->getSize().y / 2) >= m_window.getView().getSize().y)
     {
         m_sprite.setPosition(m_sprite.getPosition().x, 0);
     }

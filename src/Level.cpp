@@ -32,7 +32,7 @@ void Level::update(float dt)
 {
     for (Asteroid& a : m_asteroids)
     {
-        a.update(dt);
+        a.update(dt, m_window);
     }
 
     for (unsigned i = 0; i < m_asteroids.size(); ++i)
@@ -89,7 +89,7 @@ void Level::nextLevel()
 void Level::restartLevel()
 {
     m_asteroids.clear();
-    spawnAsteroids();
+    spawnAsteroids(m_window);
 
     m_levelCounter.restart();
     m_finishState = FinishState::Unfinished;
@@ -109,12 +109,15 @@ unsigned Level::getLevel()
     return m_level;
 }
 
-void Level::spawnAsteroids()
+void Level::spawnAsteroids(sf::RenderWindow& window)
 {
     for (unsigned i = 0; i < int((m_level+1) * 1.5); ++i)
     {
         //These will need to be modified for the future so that the difficulty is more gradual..
-        Asteroid a(sf::Vector2f(std::rand() % 1280, std::rand() % 720), (std::rand() % 8) + 5, (std::rand() % 200) + 50);
+        Asteroid a(sf::Vector2f(std::rand() % int(window.getView().getSize().x),
+                                std::rand() % int(window.getView().getSize().y)),
+                   (std::rand() % 8) + 5,
+                   (std::rand() % 200) + 50);
         m_asteroids.push_back(a);
     }
 }

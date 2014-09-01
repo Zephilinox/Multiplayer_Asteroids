@@ -24,7 +24,7 @@ m_action(0)
     m_stateID = "GameState";
 
     m_player1.setColor(sf::Color(255, 180, 0));
-    m_player2.setColor(sf::Color(50, 200, 50));
+    m_player2.setColor(sf::Color(0, 180, 255));
 
     m_player1.useWASD();
     m_player2.useArrow();
@@ -92,16 +92,16 @@ void GameState::update(float dt)
         m_player2.checkCollision(a.getCollisionShape());
     }
 
-    m_player1Score.setText(zge::toString(m_player1.getBulletManager().getScore()));
+    m_player1Score.setText("Score: " + zge::toString(m_player1.getBulletManager().getScore()));
     m_player1Score.update(dt);
 
-    m_player1Lives.setText(zge::toString(m_player1.getLives()));
+    m_player1Lives.setText("Lives: " + zge::toString(m_player1.getLives()));
     m_player1Lives.update(dt);
 
-    m_player2Score.setText(zge::toString(m_player2.getBulletManager().getScore()));
+    m_player2Score.setText("Score: " + zge::toString(m_player2.getBulletManager().getScore()));
     m_player2Score.update(dt);
 
-    m_player2Lives.setText(zge::toString(m_player2.getLives()));
+    m_player2Lives.setText("Lives: " + zge::toString(m_player2.getLives()));
     m_player2Lives.update(dt);
 }
 

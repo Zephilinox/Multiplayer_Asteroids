@@ -14,6 +14,7 @@ m_titleText("", "fonts/arial.ttf", 32, sf::Vector2f(m_window.getView().getCenter
 m_action(0),
 m_winner(Winner::None)
 {
+    transparent = true;
     m_stateID = "GameOverState";
 
     m_menu.addButton("/textures/button.png", "Restart Game");
@@ -61,6 +62,9 @@ void GameOverState::update(float dt)
 
 void GameOverState::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    sf::RectangleShape rs(m_window.getView().getSize());
+    rs.setFillColor(sf::Color(20, 20, 20, 200));
+    target.draw(rs, states);
     target.draw(m_titleText, states);
     target.draw(m_menu, states);
 }

@@ -27,11 +27,11 @@ void Bullet::handleEvent(const sf::Event& event)
 
 }
 
-void Bullet::update(float dt)
+void Bullet::update(float dt, sf::RenderWindow& window)
 {
     m_sprite.move(m_velocity.x * dt, m_velocity.y * dt);
 
-    keepInWindow();
+    keepInWindow(window);
 
     updateCollisionShape(m_sprite.getPosition(),
                          ((m_texture->getSize().x / 2) + (m_texture->getSize().y / 2) / 2), //radius
@@ -70,21 +70,21 @@ bool Bullet::isAlive()
     return m_isAlive;
 }
 
-void Bullet::keepInWindow()
+void Bullet::keepInWindow(sf::RenderWindow& window)
 {
     if (m_sprite.getPosition().x + (m_texture->getSize().x / 2) <= 0)
     {
-        m_sprite.setPosition(1280, m_sprite.getPosition().y);
+        m_sprite.setPosition(window.getView().getSize().x, m_sprite.getPosition().y);
     }
-    else if (m_sprite.getPosition().x - (m_texture->getSize().x / 2) >= 1280)
+    else if (m_sprite.getPosition().x - (m_texture->getSize().x / 2) >= window.getView().getSize().x)
     {
         m_sprite.setPosition(0, m_sprite.getPosition().y);
     }
     else if (m_sprite.getPosition().y + (m_texture->getSize().y / 2 ) <= 0)
     {
-        m_sprite.setPosition(m_sprite.getPosition().x, 720);
+        m_sprite.setPosition(m_sprite.getPosition().x, window.getView().getSize().y);
     }
-    else if (m_sprite.getPosition().y - (m_texture->getSize().y / 2) >= 720)
+    else if (m_sprite.getPosition().y - (m_texture->getSize().y / 2) >= window.getView().getSize().y)
     {
         m_sprite.setPosition(m_sprite.getPosition().x, 0);
     }

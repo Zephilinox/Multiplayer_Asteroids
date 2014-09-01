@@ -14,11 +14,11 @@ void BulletManager::handleEvent(const sf::Event event)
     }
 }
 
-void BulletManager::update(float dt)
+void BulletManager::update(float dt, sf::RenderWindow& window)
 {
     for (Bullet& b : m_bullets)
     {
-        b.update(dt);
+        b.update(dt, window);
     }
 
     m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(),

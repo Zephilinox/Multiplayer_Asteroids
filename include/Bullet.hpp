@@ -17,7 +17,7 @@ public:
     Bullet(sf::Vector2f pos, float rotation, float speed, sf::Color col);
 
     void handleEvent(const sf::Event& event);
-    void update(float dt);
+    void update(float dt, sf::RenderWindow& window);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void handleCollision(sf::CircleShape otherColShape) override;
@@ -29,7 +29,7 @@ public:
     bool isAlive();
 
 private:
-    void keepInWindow();
+    void keepInWindow(sf::RenderWindow& window);
 
     zge::Resource<sf::Texture> m_texture;
     mutable sf::Sprite m_sprite;

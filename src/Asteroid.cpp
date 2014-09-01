@@ -36,12 +36,12 @@ void Asteroid::handleEvent(const sf::Event& event)
 
 }
 
-void Asteroid::update(float dt)
+void Asteroid::update(float dt, sf::RenderWindow& window)
 {
     m_shape.rotate(m_rotationSpeed * dt);
     m_shape.move(m_velocity.x * dt, m_velocity.y * dt);
 
-    keepInWindow();
+    keepInWindow(window);
 
     updateCollisionShape(m_shape.getPosition(),
                          m_radius,
@@ -87,21 +87,21 @@ Asteroid Asteroid::split()
     }
 }
 
-void Asteroid::keepInWindow()
+void Asteroid::keepInWindow(sf::RenderWindow& window)
 {
     if (m_shape.getPosition().x + m_radius <= 0)
     {
-        m_shape.setPosition(1280 + m_radius, m_shape.getPosition().y);
+        m_shape.setPosition(window.getView().getSize().x + m_radius, m_shape.getPosition().y);
     }
-    else if (m_shape.getPosition().x - m_radius >= 1280)
+    else if (m_shape.getPosition().x - m_radius >= window.getView().getSize().x)
     {
         m_shape.setPosition(-m_radius, m_shape.getPosition().y);
     }
     else if (m_shape.getPosition().y + m_radius <= 0)
     {
-        m_shape.setPosition(m_shape.getPosition().x, 720 + m_radius);
+        m_shape.setPosition(m_shape.getPosition().x, window.getView().getSize().y + m_radius);
     }
-    else if (m_shape.getPosition().y - m_radius >= 720)
+    else if (m_shape.getPosition().y - m_radius >= window.getView().getSize().y)
     {
         m_shape.setPosition(m_shape.getPosition().x, -m_radius);
     }

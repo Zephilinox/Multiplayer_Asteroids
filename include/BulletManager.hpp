@@ -15,7 +15,7 @@ class BulletManager : public sf::Drawable
 public:
     BulletManager();
     void handleEvent(const sf::Event event);
-    void update(float dt);
+    void update(float dt, sf::RenderWindow& window);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void createBullet(sf::Vector2f pos, float rotation, float speed, sf::Color col);
