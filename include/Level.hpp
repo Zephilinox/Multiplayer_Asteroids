@@ -7,6 +7,7 @@
 //3RD
 #include <SFML/Graphics.hpp>
 #include <ZGE/ResourceManagement/Resource.hpp>
+#include <ZGE/TextHandler.hpp>
 
 //SELF
 #include "Asteroid.hpp"
@@ -40,8 +41,7 @@ private:
     FinishState m_finishState;
     unsigned m_level;
     mutable std::vector<Asteroid> m_asteroids;
-    zge::Resource<sf::Font> m_font;
-    sf::Text m_levelTitle;
+    zge::TextHandler m_levelTitle;
     sf::Clock m_levelCounter;
 };
 

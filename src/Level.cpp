@@ -11,13 +11,9 @@ Level::Level(sf::RenderWindow& window, unsigned level):
 m_window(window),
 m_finishState(FinishState::Unfinished),
 m_level(level),
-m_font("fonts/arial.ttf")
+m_levelTitle("", "fonts/arial.ttf", 32, sf::Vector2f(m_window.getView().getCenter().x, 0), zge::Origin::BottomCentre)
 {
-    m_levelTitle.setFont(m_font);
-    m_levelTitle.setCharacterSize(32);
-
     restartLevel();
-
 }
 
 void Level::handleEvent(const sf::Event& event)
@@ -39,13 +35,12 @@ void Level::update(float dt)
     {
         if (!m_asteroids[i].isAlive() && m_asteroids[i].canSplit())
         {
-            m_asteroids.push_back(m_asteroids[i].split());
-            m_asteroids.push_back(m_asteroids[i].split());
-            m_asteroids.push_back(m_asteroids[i].split());
-            /*Asteroid a1(sf::Vector2f(500, 500), 6, 400);
-            Asteroid a2(sf::Vector2f(500, 500), 6, 400);
-            m_asteroids.push_back(a1);
-            m_asteroids.push_back(a2);*/
+            int numSplits = std::rand() % 3 + 2;
+            while (numSplits > 0)
+            {
+                m_asteroids.push_back(m_asteroids[i].split());
+                numSplits--;
+            }
         }
     }
 
@@ -94,9 +89,7 @@ void Level::restartLevel()
     m_levelCounter.restart();
     m_finishState = FinishState::Unfinished;
 
-    m_levelTitle.setString("Level " + zge::toString(m_level));
-    m_levelTitle.setPosition(m_window.getView().getCenter().x - (m_levelTitle.getLocalBounds().width - m_levelTitle.getLocalBounds().left)/2,
-                             m_levelTitle.getLocalBounds().height + m_levelTitle.getLocalBounds().top);
+    m_levelTitle.setText("Level " + zge::toString(m_level));
 }
 
 std::vector<Asteroid>& Level::getAsteroids() const
