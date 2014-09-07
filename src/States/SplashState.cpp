@@ -15,12 +15,7 @@ m_logoTexture("textures/ZX-128.png")
 {
     m_stateID = "SplashState";
 
-    /*m_gameTitle.setFont(m_font);
-    //m_gameTitle.setColor(sf::Color(255, 255, 255, 0));
-    m_gameTitle.setCharacterSize(36);
-    m_gameTitle.setString("Multiplayer Asteroids!");
-    m_gameTitle.setPosition((window.getSize().x / 2) - ((m_gameTitle.getLocalBounds().width + m_gameTitle.getLocalBounds().left) / 2),
-                            m_gameTitle.getLocalBounds().height + m_gameTitle.getLocalBounds().top + (window.getSize().y / 5));*/
+    m_gameTitle.enableBorder(true);
 
     m_logoSprite.setTexture(m_logoTexture);
     m_logoSprite.setColor(sf::Color(255, 255, 255, 0));

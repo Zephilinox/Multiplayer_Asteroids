@@ -17,6 +17,8 @@ m_winner(Winner::None)
     transparent = true;
     m_stateID = "GameOverState";
 
+    m_titleText.enableBorder(true);
+
     m_menu.addButton("/textures/button.png", "Restart Game");
     m_menu.addButton("/textures/button.png", "Exit to Main Menu");
     m_menu.addButton("/textures/button.png", "Exit to Desktop");

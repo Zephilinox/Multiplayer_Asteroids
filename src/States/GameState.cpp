@@ -28,6 +28,11 @@ m_action(0)
 
     m_player1.useWASD();
     m_player2.useArrow();
+
+    m_player1Score.enableBorder(true);
+    m_player1Lives.enableBorder(true);
+    m_player2Score.enableBorder(true);
+    m_player2Lives.enableBorder(true);
 }
 
 void GameState::handleEvent(const sf::Event& event)
