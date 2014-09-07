@@ -62,7 +62,6 @@
 			<Add library="Z:\Programming\C++\MinGW-Latest\lib\liblua.a" />
 			<Add directory="Z:/Programming/C++/SFML-2.1/lib" />
 		</Linker>
-		<Unit filename="../ZGE/include/Lua.hpp" />
 		<Unit filename="../ZGE/include/ZGE/Collider.hpp" />
 		<Unit filename="../ZGE/include/ZGE/ECS/BaseComponent.hpp" />
 		<Unit filename="../ZGE/include/ZGE/ECS/BaseSystem.hpp" />
@@ -71,6 +70,7 @@
 		<Unit filename="../ZGE/include/ZGE/GUI/Button.hpp" />
 		<Unit filename="../ZGE/include/ZGE/GUI/Menu.hpp" />
 		<Unit filename="../ZGE/include/ZGE/KeybindingCache.hpp" />
+		<Unit filename="../ZGE/include/ZGE/Lua.hpp" />
 		<Unit filename="../ZGE/include/ZGE/ResourceManagement/Resource.hpp" />
 		<Unit filename="../ZGE/include/ZGE/ResourceManagement/ResourceCache.hpp" />
 		<Unit filename="../ZGE/include/ZGE/ResourceManagement/ResourceManager.hpp" />
@@ -80,7 +80,6 @@
 		<Unit filename="../ZGE/include/ZGE/TextHandler.hpp" />
 		<Unit filename="../ZGE/include/ZGE/Utility.hpp" />
 		<Unit filename="../ZGE/include/ZGE/Vector.hpp" />
-		<Unit filename="../ZGE/src/Lua.cpp" />
 		<Unit filename="../ZGE/src/ZGE/Collider.cpp" />
 		<Unit filename="../ZGE/src/ZGE/ECS/BaseComponent.cpp" />
 		<Unit filename="../ZGE/src/ZGE/ECS/BaseSystem.cpp" />
@@ -89,6 +88,7 @@
 		<Unit filename="../ZGE/src/ZGE/GUI/Button.cpp" />
 		<Unit filename="../ZGE/src/ZGE/GUI/Menu.cpp" />
 		<Unit filename="../ZGE/src/ZGE/KeybindingCache.cpp" />
+		<Unit filename="../ZGE/src/ZGE/Lua.cpp" />
 		<Unit filename="../ZGE/src/ZGE/ResourceManagement/Resource.cpp" />
 		<Unit filename="../ZGE/src/ZGE/ResourceManagement/Resource.inl" />
 		<Unit filename="../ZGE/src/ZGE/ResourceManagement/ResourceCache.inl" />
