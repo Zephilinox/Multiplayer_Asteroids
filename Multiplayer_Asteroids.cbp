@@ -114,7 +114,6 @@
 		<Unit filename="include/States/GameState.hpp" />
 		<Unit filename="include/States/MenuState.hpp" />
 		<Unit filename="include/States/PauseState.hpp" />
-		<Unit filename="include/States/PauseState_2.hpp" />
 		<Unit filename="include/States/SplashState.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Asteroid.cpp" />
