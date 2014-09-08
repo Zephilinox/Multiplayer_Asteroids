@@ -42,12 +42,11 @@ void SplashState::update(float dt)
         m_logoSprite.setColor(fade(m_logoSprite.getColor(), 0, 255, sf::seconds(1.f), m_timeSpentInState.getElapsedTime() - sf::seconds(0.5f)));
     }
     else if (m_timeSpentInState.getElapsedTime().asSeconds() >= 1.5f &&
-             m_timeSpentInState.getElapsedTime().asSeconds() <= 2.5f)
+             m_timeSpentInState.getElapsedTime().asSeconds() <= 2.6f)
     {
         m_gameTitle.setColor(fade(m_gameTitle.getColor(), 255, 0, sf::seconds(1.f), m_timeSpentInState.getElapsedTime() - sf::seconds(1.5f)));
         m_logoSprite.setColor(fade(m_logoSprite.getColor(), 255, 0, sf::seconds(1.f), m_timeSpentInState.getElapsedTime() - sf::seconds(1.5f)));
     }
-
 }
 
 void SplashState::draw(sf::RenderTarget& target, sf::RenderStates states) const
