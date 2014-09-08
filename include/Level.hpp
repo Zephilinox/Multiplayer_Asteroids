@@ -42,6 +42,7 @@ private:
     unsigned m_level;
     mutable std::vector<Asteroid> m_asteroids;
     zge::TextHandler m_levelTitle;
+    zge::TextHandler m_asteroidCount;
     sf::Clock m_levelCounter;
 };
 

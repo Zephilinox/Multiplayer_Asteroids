@@ -33,6 +33,12 @@ m_action(0)
     m_player1Lives.enableBorder(true);
     m_player2Score.enableBorder(true);
     m_player2Lives.enableBorder(true);
+
+    m_player1Score.setColor(sf::Color(255, 180, 0));
+    m_player1Lives.setColor(sf::Color(255, 180, 0));
+
+    m_player2Score.setColor(sf::Color(0, 180, 255));
+    m_player2Lives.setColor(sf::Color(0, 180, 255));
 }
 
 void GameState::handleEvent(const sf::Event& event)
@@ -65,7 +71,7 @@ void GameState::update(float dt)
         m_level.nextLevel();
     }
 
-    if (m_level.getLevel() >= 10 ||
+    if (m_level.getLevel() > 21 ||
         m_player1.getLives() == 0 ||
         m_player2.getLives() == 0)
     {

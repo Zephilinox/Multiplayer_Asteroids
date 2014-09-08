@@ -1,10 +1,11 @@
 #include "Asteroid.hpp"
 
-Asteroid::Asteroid(sf::Vector2f pos, unsigned sides, float speed):
+Asteroid::Asteroid(sf::Vector2f pos, unsigned sides, float speed, sf::Vector2f windowSize):
 Collider(sides),
 m_velocity(1, 1),
 m_speed(speed),
-m_isAlive(true)
+m_isAlive(true),
+m_wasOnScreen(false)
 {
     if (sides < 5)
     {
@@ -19,12 +20,14 @@ m_isAlive(true)
 
     createShape(sides);
 
-    int angle = std::rand() % 360;
-    m_velocity *= zge::Vector::degToVector(angle);
+    sf::Vector2f targetPos(std::rand() % int(windowSize.x),
+                          std::rand() % int(windowSize.y));
+
+    zge::Vector targetDirection(targetPos.x - pos.x,
+                                targetPos.y - pos.y);
+    m_velocity *= targetDirection.normalized();
     m_velocity *= m_speed;
     m_velocity /= sides;
-    //std::cout << m_velocity.x << ", " << m_velocity.y << "\n";
-    //std::cout << "ang = " << angle << "\n";
 
     m_rotationSpeed = (std::rand() % int((speed*2)/sides)) - speed/sides;
 
@@ -39,7 +42,15 @@ void Asteroid::handleEvent(const sf::Event& event)
 void Asteroid::update(float dt, sf::RenderWindow& window)
 {
     m_shape.rotate(m_rotationSpeed * dt);
-    m_shape.move(m_velocity.x * dt, m_velocity.y * dt);
+
+    if (m_wasOnScreen)
+    {
+        m_shape.move(m_velocity.x * dt, m_velocity.y * dt);
+    }
+    else
+    {
+        m_shape.move(m_velocity.x * dt * 10, m_velocity.y * dt * 10);
+    }
 
     keepInWindow(window);
 
@@ -69,20 +80,23 @@ bool Asteroid::canSplit()
     return (m_shape.getPointCount() - 2 >= 5);
 }
 
-Asteroid Asteroid::split()
+Asteroid Asteroid::split(sf::Vector2f windowSize)
 {
     if (canSplit())
     {
         std::cout << "Splitting Asteroid\n";
-        Asteroid a(sf::Vector2f(m_shape.getPosition().x + (std::rand() % 20 - 10), m_shape.getPosition().y + (std::rand() % 20 - 10)),
-                                                            m_shape.getPointCount() - 2,
-                                                            m_speed + (std::rand() % 200 + 50));
+        Asteroid a(sf::Vector2f(m_shape.getPosition().x + (std::rand() % 20 - 10),
+                                m_shape.getPosition().y + (std::rand() % 20 - 10)),
+                   m_shape.getPointCount() - 2,
+                   m_speed + (std::rand() % 200 + 50),
+                   windowSize
+                   );
         return a;
     }
     else
     {
         std::cout << "This should not happen\n";
-        Asteroid a(m_shape.getPosition(), 5, m_speed);
+        Asteroid a(m_shape.getPosition(), 5, m_speed, windowSize);
         return a;
     }
 }
@@ -91,19 +105,35 @@ void Asteroid::keepInWindow(sf::RenderWindow& window)
 {
     if (m_shape.getPosition().x + m_radius <= 0)
     {
-        m_shape.setPosition(window.getView().getSize().x + m_radius, m_shape.getPosition().y);
+        if (m_wasOnScreen)
+        {
+            m_shape.setPosition(window.getView().getSize().x + m_radius, m_shape.getPosition().y);
+        }
     }
     else if (m_shape.getPosition().x - m_radius >= window.getView().getSize().x)
     {
-        m_shape.setPosition(-m_radius, m_shape.getPosition().y);
+        if (m_wasOnScreen)
+        {
+            m_shape.setPosition(-m_radius, m_shape.getPosition().y);
+        }
     }
     else if (m_shape.getPosition().y + m_radius <= 0)
     {
-        m_shape.setPosition(m_shape.getPosition().x, window.getView().getSize().y + m_radius);
+        if (m_wasOnScreen)
+        {
+            m_shape.setPosition(m_shape.getPosition().x, window.getView().getSize().y + m_radius);
+        }
     }
     else if (m_shape.getPosition().y - m_radius >= window.getView().getSize().y)
     {
-        m_shape.setPosition(m_shape.getPosition().x, -m_radius);
+        if (m_wasOnScreen)
+        {
+            m_shape.setPosition(m_shape.getPosition().x, -m_radius);
+        }
+    }
+    else if (!m_wasOnScreen)
+    {
+        m_wasOnScreen = true;
     }
 }
 

@@ -14,7 +14,7 @@ class Asteroid : public sf::Drawable, public zge::Collider
 {
 
 public:
-    Asteroid(sf::Vector2f pos, unsigned sides, float speed);
+    Asteroid(sf::Vector2f pos, unsigned sides, float speed, sf::Vector2f windowSize);
 
     void handleEvent(const sf::Event& event);
     void update(float dt, sf::RenderWindow& window);
@@ -24,7 +24,7 @@ public:
     bool isAlive();
 
     bool canSplit();
-    Asteroid split();
+    Asteroid split(sf::Vector2f windowSize);
 
 private:
     void keepInWindow(sf::RenderWindow& window);
@@ -37,6 +37,7 @@ private:
     float m_rotationSpeed;
     mutable bool m_isColliding;
     bool m_isAlive;
+    bool m_wasOnScreen;
 };
 
 #endif //ASTEROID_HPP
