@@ -119,7 +119,7 @@ void Level::spawnAsteroids()
     int length = m_window.getView().getSize().x * (2 + (m_level / 4)); //min 2, +1 every 4 levels
     int height = m_window.getView().getSize().y * (2 + (m_level / 4));
 
-    std::uniform_int_distribution<int> lengthDistr((height/-2), height/2);
+    std::uniform_int_distribution<int> lengthDistr((length/-2), length/2);
     std::uniform_int_distribution<int> heightDistr((height/-2), height/2);
 
     sf::Vector2f pos (-1, -1);
