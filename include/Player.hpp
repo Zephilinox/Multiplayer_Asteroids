@@ -34,6 +34,8 @@ public:
     BulletManager& getBulletManager();
     unsigned getLives();
 
+    bool isInvincible();
+
     void handleCollision(sf::CircleShape otherColShape) override;
 
 private:
@@ -58,6 +60,10 @@ private:
     mutable bool m_isColliding;
 
     unsigned m_lives;
+
+    sf::Clock m_flashingTime;
+    sf::Time m_flashingDuration;
+    bool m_wasDamaged;
 };
 
 #endif //PLAYER_HPP

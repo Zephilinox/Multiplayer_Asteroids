@@ -8,14 +8,16 @@
 //SELF
 #include "ZGE/Utility.hpp"
 
-Player::Player(sf::RenderWindow& window):
-Collider(32),
-m_window(window),
-m_texture("textures/ship.png"),
-m_acceleration(200),
-m_maxVelocityLength(m_acceleration * 2),
-m_shootDelay(sf::seconds(0.15f)),
-m_lives(8)
+Player::Player(sf::RenderWindow& window)
+    : Collider(32)
+    , m_window(window)
+    , m_texture("textures/ship.png")
+    , m_acceleration(200)
+    , m_maxVelocityLength(m_acceleration * 2)
+    , m_shootDelay(sf::seconds(0.15f))
+    , m_lives(8)
+    , m_flashingDuration(sf::seconds(3.f))
+    , m_wasDamaged(false)
 {
     m_texture->setSmooth(true);
 
@@ -75,13 +77,31 @@ void Player::update(float dt)
     updateCollisionShape(m_sprite.getPosition(),
                          ((m_texture->getSize().x / 2) + (m_texture->getSize().y / 2)) / 2, //radius
                          m_sprite.getRotation());
+
+    if (m_wasDamaged && m_flashingTime.getElapsedTime() > m_flashingDuration)
+    {
+        m_wasDamaged = false;
+    }
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_bulletManager, states);
 
-    target.draw(m_sprite, states);
+    if (m_wasDamaged && m_flashingTime.getElapsedTime() <= m_flashingDuration)
+    {
+        int mili = m_flashingTime.getElapsedTime().asMilliseconds();
+        int percentage = 20;
+        int remMili = mili % 1000 % (percentage*10); //Ignore seconds, then get a percentage of the remainder as total blink/unblink duration
+        if (remMili < (percentage*10/2)) // if div 2, then blink half the time
+        {
+            target.draw(m_sprite, states);
+        }
+    }
+    else
+    {
+        target.draw(m_sprite, states);
+    }
 }
 
 void Player::useWASD()
@@ -122,6 +142,11 @@ BulletManager& Player::getBulletManager()
 unsigned Player::getLives()
 {
     return m_lives;
+}
+
+bool Player::isInvincible()
+{
+    return m_wasDamaged;
 }
 
 void Player::movement(float dt)
@@ -188,4 +213,7 @@ void Player::handleCollision(sf::CircleShape otherColShape)
         m_lives--;
         std::cout << m_lives << "\n";
     }
+
+    m_wasDamaged = true;
+    m_flashingTime.restart();
 }

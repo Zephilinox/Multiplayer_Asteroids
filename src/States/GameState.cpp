@@ -96,11 +96,17 @@ void GameState::update(float dt)
             a.checkCollision(b.getCollisionShape());
         }
 
-        a.checkCollision(m_player1.getCollisionShape());
-        m_player1.checkCollision(a.getCollisionShape());
+        if (!m_player1.isInvincible())
+        {
+            a.checkCollision(m_player1.getCollisionShape());
+            m_player1.checkCollision(a.getCollisionShape());
+        }
 
-        a.checkCollision(m_player2.getCollisionShape());
-        m_player2.checkCollision(a.getCollisionShape());
+        if (!m_player2.isInvincible())
+        {
+            a.checkCollision(m_player2.getCollisionShape());
+            m_player2.checkCollision(a.getCollisionShape());
+        }
     }
 
     m_player1Score.setText("Score: " + zge::toString(m_player1.getBulletManager().getScore()));
