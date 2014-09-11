@@ -4,9 +4,10 @@
 #include <cmath>
 
 //3RD
+#include <ZGE/Lua.hpp>
+#include <ZGE/Utility.hpp>
 
 //SELF
-#include "ZGE/Utility.hpp"
 
 Player::Player(sf::RenderWindow& window)
     : Collider(32)
@@ -26,7 +27,6 @@ Player::Player(sf::RenderWindow& window)
                        m_texture->getSize().y / 2);
 
     m_sprite.setPosition(window.getView().getCenter().x, window.getView().getCenter().y);
-    useWASD();
 
     m_collisionShape.setFillColor(sf::Color(0, 255, 255, 100));
 }
@@ -104,24 +104,25 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
     }
 }
 
-void Player::useWASD()
+void Player::useControls(std::string luaGlobal)
 {
-    m_keys.add("Forwards", sf::Keyboard::Key::W);
-    m_keys.add("Backwards", sf::Keyboard::Key::S);
-    m_keys.add("Left", sf::Keyboard::Key::A);
-    m_keys.add("Right", sf::Keyboard::Key::D);
-    m_keys.add("Decelerate", sf::Keyboard::Key::LShift);
-    m_keys.add("Shoot", sf::Keyboard::Key::Space);
-}
+    zge::Lua luaState;
+    luaState.loadFile("variables.lua");
+    luaState.executeFile("variables.lua");
 
-void Player::useArrow()
-{
-    m_keys.add("Forwards", sf::Keyboard::Key::Up);
-    m_keys.add("Backwards", sf::Keyboard::Key::Down);
-    m_keys.add("Left", sf::Keyboard::Key::Left);
-    m_keys.add("Right", sf::Keyboard::Key::Right);
-    m_keys.add("Decelerate", sf::Keyboard::Key::RShift);
-    m_keys.add("Shoot", sf::Keyboard::Key::RControl);
+    sf::Keyboard::Key forwards = sf::Keyboard::Key(luaState.getGlobal<int>(luaGlobal + ".controls.forwards"));
+    sf::Keyboard::Key backwards = sf::Keyboard::Key(luaState.getGlobal<int>(luaGlobal + ".controls.backwards"));
+    sf::Keyboard::Key left = sf::Keyboard::Key(luaState.getGlobal<int>(luaGlobal + ".controls.left"));
+    sf::Keyboard::Key right = sf::Keyboard::Key(luaState.getGlobal<int>(luaGlobal + ".controls.right"));
+    sf::Keyboard::Key decelerate = sf::Keyboard::Key(luaState.getGlobal<int>(luaGlobal + ".controls.decelerate"));
+    sf::Keyboard::Key shoot = sf::Keyboard::Key(luaState.getGlobal<int>(luaGlobal + ".controls.shoot"));
+
+    m_keys.add("Forwards", forwards);
+    m_keys.add("Backwards", backwards);
+    m_keys.add("Left", left);
+    m_keys.add("Right", right);
+    m_keys.add("Decelerate", decelerate);
+    m_keys.add("Shoot", shoot);
 }
 
 void Player::setColor(sf::Color c)

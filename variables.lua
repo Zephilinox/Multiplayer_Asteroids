@@ -116,14 +116,9 @@ settings =
 		framerate = 60
 	},
 	
-	controls = 
-	{
-		pause = Keys["Esc"]
-	},
-	
 	player1 = 
 	{
-		colour = 
+		color = 
 		{
 			r = 255,
 			g = 180,
@@ -143,7 +138,7 @@ settings =
 	
 	player2 = 
 	{
-		colour = 
+		color = 
 		{
 			r = 0,
 			g = 180,

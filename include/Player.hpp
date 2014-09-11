@@ -24,8 +24,7 @@ public:
     void update(float dt);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-    void useWASD();
-    void useArrow();
+    void useControls(std::string luaGlobal);
 
     void setColor(sf::Color c);
     void setGravityPosition(zge::Vector pos);

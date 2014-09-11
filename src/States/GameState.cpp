@@ -5,6 +5,7 @@
 
 //3RD
 #include <ZGE/Utility.hpp>
+#include <ZGE/Lua.hpp>
 
 //SELF
 #include "States/PauseState.hpp"
@@ -23,22 +24,33 @@ m_action(0)
 {
     m_stateID = "GameState";
 
-    m_player1.setColor(sf::Color(255, 180, 0));
-    m_player2.setColor(sf::Color(0, 180, 255));
+    zge::Lua luaState;
+    luaState.loadFile("variables.lua");
+    luaState.executeFile("variables.lua");
 
-    m_player1.useWASD();
-    m_player2.useArrow();
+    sf::Color player1Color = sf::Color(luaState.getGlobal<int>("settings.player1.color.r"),
+                                       luaState.getGlobal<int>("settings.player1.color.g"),
+                                       luaState.getGlobal<int>("settings.player1.color.b"));
+
+    sf::Color player2Color = sf::Color(luaState.getGlobal<int>("settings.player2.color.r"),
+                                       luaState.getGlobal<int>("settings.player2.color.g"),
+                                       luaState.getGlobal<int>("settings.player2.color.b"));
+    m_player1.setColor(player1Color);
+    m_player2.setColor(player2Color);
+
+    m_player1.useControls("settings.player1");
+    m_player2.useControls("settings.player2");
 
     m_player1Score.enableBorder(true);
     m_player1Lives.enableBorder(true);
     m_player2Score.enableBorder(true);
     m_player2Lives.enableBorder(true);
 
-    m_player1Score.setColor(sf::Color(255, 180, 0));
-    m_player1Lives.setColor(sf::Color(255, 180, 0));
+    m_player1Score.setColor(player1Color);
+    m_player1Lives.setColor(player1Color);
 
-    m_player2Score.setColor(sf::Color(0, 180, 255));
-    m_player2Lives.setColor(sf::Color(0, 180, 255));
+    m_player2Score.setColor(player2Color);
+    m_player2Lives.setColor(player2Color);
 }
 
 void GameState::handleEvent(const sf::Event& event)
