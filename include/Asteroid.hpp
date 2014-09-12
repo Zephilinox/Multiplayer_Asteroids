@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <ZGE/Vector.hpp>
 #include <ZGE/Collider.hpp>
+#include <ZGE/ResourceManagement/Resource.hpp>
 
 //SELF
 
@@ -38,6 +39,8 @@ private:
     mutable bool m_isColliding;
     bool m_isAlive;
     bool m_wasOnScreen;
+
+    zge::Resource<sf::Sound> m_explosionSound;
 };
 
 #endif //ASTEROID_HPP

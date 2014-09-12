@@ -5,7 +5,8 @@ Collider(sides),
 m_velocity(1, 1),
 m_speed(speed),
 m_isAlive(true),
-m_wasOnScreen(false)
+m_wasOnScreen(false),
+m_explosionSound("audio/explosion.wav")
 {
     if (sides < 5)
     {
@@ -68,6 +69,7 @@ void Asteroid::handleCollision(sf::CircleShape otherColShape)
 {
     m_isAlive = false;
     m_isColliding = true;
+    m_explosionSound->play();
 }
 
 bool Asteroid::isAlive()
