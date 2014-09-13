@@ -33,6 +33,8 @@ m_explosionSound("audio/explosion.wav")
     m_rotationSpeed = (std::rand() % int((speed*2)/sides)) - speed/sides;
 
     m_collisionShape.setFillColor(sf::Color(0, 255, 255, 100));
+
+    m_explosionSound->setVolume(50);
 }
 
 void Asteroid::handleEvent(const sf::Event& event)
@@ -58,6 +60,22 @@ void Asteroid::update(float dt, sf::RenderWindow& window)
     updateCollisionShape(m_shape.getPosition(),
                          m_radius,
                          m_shape.getRotation());
+
+    if (!m_isAlive && m_explosionSound->getStatus() == sf::Sound::Playing)
+    {
+        float percent = (m_explosionSound->getPlayingOffset().asSeconds() / m_explosionSound->getBuffer()->getDuration().asSeconds());
+        int fadedAlpha = 255 * (1.f-percent);
+
+        sf::Color col = m_shape.getFillColor();
+        col.g = fadedAlpha;
+        col.b = fadedAlpha / 2;
+        col.a = fadedAlpha;
+        m_shape.setFillColor(col);
+
+        col = m_shape.getOutlineColor();
+        col.a = fadedAlpha;
+        m_shape.setOutlineColor(col);
+    }
 }
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -67,13 +85,21 @@ void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Asteroid::handleCollision(sf::CircleShape otherColShape)
 {
-    m_isAlive = false;
-    m_isColliding = true;
-    m_explosionSound->play();
+    if (m_isAlive)
+    {
+        m_isAlive = false;
+        m_isColliding = true;
+        m_explosionSound->play();
+    }
 }
 
 bool Asteroid::isAlive()
 {
+    if (!m_isAlive && m_explosionSound->getStatus() == sf::Sound::Playing)
+    {
+        return true;
+    }
+
     return m_isAlive;
 }
 

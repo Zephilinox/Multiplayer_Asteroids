@@ -19,6 +19,7 @@ Player::Player(sf::RenderWindow& window)
     , m_lives(8)
     , m_flashingDuration(sf::seconds(3.f))
     , m_wasDamaged(false)
+    , m_shootSound("audio/shoot.wav")
 {
     m_texture->setSmooth(true);
 
@@ -29,6 +30,9 @@ Player::Player(sf::RenderWindow& window)
     m_sprite.setPosition(window.getView().getCenter().x, window.getView().getCenter().y);
 
     m_collisionShape.setFillColor(sf::Color(0, 255, 255, 100));
+
+    m_shootSound->setVolume(50);
+    m_shootSound->setPitch(((std::rand() % 100) / 100.f) + 0.5f);
 }
 
 void Player::handleEvent(const sf::Event& event)
@@ -70,6 +74,7 @@ void Player::update(float dt)
         gunPos.x += m_velocity.x * dt;
         gunPos.y += m_velocity.y * dt;
         m_bulletManager.createBullet(gunPos, m_sprite.getRotation() + (std::rand() % 6 - 3), 800, m_sprite.getColor());
+        m_shootSound->play();
     }
 
     keepInWindow();

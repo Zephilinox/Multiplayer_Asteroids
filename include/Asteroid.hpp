@@ -40,7 +40,7 @@ private:
     bool m_isAlive;
     bool m_wasOnScreen;
 
-    zge::Resource<sf::Sound> m_explosionSound;
+    mutable zge::Resource<sf::Sound> m_explosionSound;
 };
 
 #endif //ASTEROID_HPP

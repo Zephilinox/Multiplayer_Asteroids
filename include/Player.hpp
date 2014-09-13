@@ -63,6 +63,8 @@ private:
     sf::Clock m_flashingTime;
     sf::Time m_flashingDuration;
     bool m_wasDamaged;
+
+    zge::Resource<sf::Sound> m_shootSound;
 };
 
 #endif //PLAYER_HPP
