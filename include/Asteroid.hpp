@@ -22,6 +22,8 @@ public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void handleCollision(sf::CircleShape otherColShape) override;
+    sf::CircleShape getCollisionShape() const override;
+
     bool isAlive();
 
     bool canSplit();

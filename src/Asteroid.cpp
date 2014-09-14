@@ -93,6 +93,18 @@ void Asteroid::handleCollision(sf::CircleShape otherColShape)
     }
 }
 
+sf::CircleShape Asteroid::getCollisionShape() const
+{
+    if (m_shape.getFillColor().a <= 100)
+    {
+        return sf::CircleShape(0, 0);
+    }
+    else
+    {
+        return m_collisionShape;
+    }
+}
+
 bool Asteroid::isAlive()
 {
     if (!m_isAlive && m_explosionSound->getStatus() == sf::Sound::Playing)
