@@ -22,6 +22,8 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void postDraw() override;
 
+    void useOnePlayer();
+
 private:
     Player m_player1;
     Player m_player2;
@@ -33,6 +35,8 @@ private:
     Level m_level;
 
     int m_action;
+
+    bool m_onePlayer;
 };
 
 #endif //GAMESTATE_HPP

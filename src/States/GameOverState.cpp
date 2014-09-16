@@ -44,6 +44,14 @@ void GameOverState::update(float dt)
     {
         m_titleText.setText("Game Over! Player 2 is the winner!");
     }
+    else if (m_winner == Winner::Solo)
+    {
+        m_titleText.setText("Game Over! You beat the game!");
+    }
+    else if (m_winner == Winner::DidNotWin)
+    {
+        m_titleText.setText ("Game Over! You lost!");
+    }
 
     m_titleText.update(dt);
     m_menu.update(dt);

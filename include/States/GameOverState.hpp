@@ -12,7 +12,7 @@
 
 //SELF
 
-enum Winner {None, Player1, Player2};
+enum Winner {None, Player1, Player2, Solo, DidNotWin};
 
 class GameOverState : public zge::BaseState
 {
