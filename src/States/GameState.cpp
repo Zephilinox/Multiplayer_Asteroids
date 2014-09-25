@@ -216,4 +216,6 @@ void GameState::useOnePlayer()
     m_player2Lives.setBorderColor(sf::Color(0, 0, 0, 0));
     m_player2Score.setColor(sf::Color(0, 0, 0, 0));
     m_player2Lives.setBorderColor(sf::Color(0, 0, 0, 0));
+    m_player1Lives.setPosition(sf::Vector2f(m_window.getSize().x, 0));
+    m_player1Lives.setOrigin(zge::Origin::TopRight);
 }
